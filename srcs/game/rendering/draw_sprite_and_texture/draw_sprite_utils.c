@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:09:11 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/23 22:06:47 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	compute_sprite_transform(t_sprite_draw *data, t_player player)
 {

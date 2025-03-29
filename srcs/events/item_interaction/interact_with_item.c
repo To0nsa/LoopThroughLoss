@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:36:16 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:16:05 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static t_item	*find_closest_item(t_game *game, double range)
 {
@@ -37,7 +37,7 @@ static t_item	*find_closest_item(t_game *game, double range)
 	return (closest_item);
 }
 
-static void	handle_single_item_removal(t_game *game, t_item *item_to_remove)
+/* static void	handle_single_item_removal(t_game *game, t_item *item_to_remove)
 {
 	free_single_item(game, item_to_remove);
 	free(game->items);
@@ -81,30 +81,24 @@ static void	remove_item_from_list(t_game *game, t_item *item_to_remove)
 	free(game->items);
 	game->items = new_list;
 	game->item_count--;
-}
+} */
 
 bool	interact_with_item(t_game *game)
 {
-	t_item	*item;
-
-	item = find_closest_item(game, 1.5);
+	t_story *story	= game->story;
+	t_item	*item	= find_closest_item(game, 1.5);
 	if (!item)
 		return (false);
-	if (item->is_collectible && !item->is_collected)
+	if (item->is_interactable)
 	{
-		item->is_collected = true;
-		if (ft_strcmp(item->name, "bucket") == 0)
-			game->player.has_bucket = true;
-		if (ft_strcmp(item->name, "key") == 0)
-			game->player.has_key = true;
-		remove_item_from_list(game, item);
+		if (story->state == DENIAL_LOOP
+			&& story->loop_number == THIRD_LOOP
+			&& ft_strcmp(item->name, "answering_machine") == 0)
+		{
+			show_temp_message(game, 3.0, "You are listening to the answering machine.");
+			// play denial loop voice message
+		}
 		return (true);
-	}
-	else if (ft_strcmp(item->name, "well") == 0
-		&& game->player.has_bucket && !game->player.has_water)
-	{
-		show_temp_message(game, 3.0, "You filled up your bucket!");
-		game->player.has_water = true;
 	}
 	return (true);
 }

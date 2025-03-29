@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:17:25 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:24:23 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:18:08 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-static void	draw_win_title(t_game *game, t_point *pos)
+/* static void	draw_win_title(t_game *game, t_point *pos)
 {
 	pos->y = game->window->size.y >> 1;
 	pos->x = (game->window->size.x >> 1) - 60;
@@ -68,4 +68,4 @@ void	draw_win_message(t_game *game)
 	any_saved = draw_saved_npcs(game, &pos);
 	draw_outcome_message(game, pos, any_saved);
 	draw_exit_instruction(game);
-}
+} */

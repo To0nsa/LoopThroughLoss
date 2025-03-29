@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:41:39 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:17:08 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+/* #include "LoopThroughLoss.h"
 
 static void	update_key_story(t_game *game, t_item *key)
 {
@@ -88,4 +88,4 @@ void	update_story(t_game *game)
 	if (key)
 		update_key_story(game, key);
 	update_exit_story(game);
-}
+} */

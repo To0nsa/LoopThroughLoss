@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/20 22:44:44 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:16:26 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 t_door	*find_closest_door(t_game *game, double range)
 {
@@ -44,16 +44,28 @@ bool	interact_with_door(t_game *game)
 	door = find_closest_door(game, 2.0);
 	if (!door)
 		return (false);
-	if (door->state == DOOR_LOCKED)
+	if (door->state == CLOSED)
 	{
-		if (game->player.has_key)
+		if (game->story->state == ACCEPTANCE_LOOP)
 		{
-			door->state = DOOR_CLOSED;
-			game->player.has_key = false;
-			show_temp_message(game, 3.0, "You unlocked the door!");
+			show_temp_message(game, 3.0, "Why leave, you are good here...");
 		}
-		else
-			show_temp_message(game, 3.0, "The door is locked!");
+		else if (game->story->state == ANGER_LOOP)
+		{
+			show_temp_message(game, 3.0, "How are you feeling today?");
+		}
+		else if (game->story->state == BARGAINING_LOOP)
+		{
+			show_temp_message(game, 3.0, "Are you feeling better now?");
+		}
+		else if (game->story->state == DEPRESSION_LOOP)
+		{
+			show_temp_message(game, 3.0, "What's the point?");
+		}
+		else if (game->story->state == ACCEPTANCE_LOOP)
+		{
+			// endgame(game);
+		}
 	}
 	return (true);
 }

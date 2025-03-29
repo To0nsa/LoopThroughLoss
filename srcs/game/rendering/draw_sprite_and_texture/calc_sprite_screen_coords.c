@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:42:27 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:16:29 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static int	get_sprite_screen_x(double transform_x, double transform_y)
 {

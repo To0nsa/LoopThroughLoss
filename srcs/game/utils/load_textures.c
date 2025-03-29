@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:25:33 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/19 10:14:31 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:08:13 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 void	load_single_xpm(t_game *game, t_texture *tex, char *path, void *mlx)
 {
@@ -42,7 +42,7 @@ void	load_sprite_animation(t_game *game, t_texture **frames,
 	}
 }
 
-void	load_sprite_frames_npc(t_game *game, t_sprite *sprite)
+/* void	load_sprite_frames_npc(t_game *game, t_sprite *sprite)
 {
 	load_sprite_animation(game, &sprite->idle_frames, sprite->idle_paths,
 		sprite->idle_frames_count);
@@ -53,15 +53,10 @@ void	load_sprite_frames_npc(t_game *game, t_sprite *sprite)
 	if (sprite->hit_paths)
 		load_sprite_animation(game, &sprite->hit_frames, sprite->hit_paths,
 			sprite->hit_frames_count);
-}
+} */
 
-void	load_game_textures(t_game *game, t_conf conf)
+void	load_game_textures(t_game *game)
 {
-	load_single_xpm(game, &game->tex.no, conf.tex_no, game->mlx);
-	load_single_xpm(game, &game->tex.so, conf.tex_so, game->mlx);
-	load_single_xpm(game, &game->tex.we, conf.tex_we, game->mlx);
-	load_single_xpm(game, &game->tex.ea, conf.tex_ea, game->mlx);
-	load_single_xpm(game, &game->tex.door, SLIDING_DOOR, game->mlx);
-	load_single_xpm(game, &game->tex.exit_door, DOOR_EXIT, game->mlx);
+	load_single_xpm(game, &game->tex.walls, WTEST, game->mlx);
 	load_single_xpm(game, &game->tex.dialogue_box, DIALOGUE_BOX, game->mlx);
 }

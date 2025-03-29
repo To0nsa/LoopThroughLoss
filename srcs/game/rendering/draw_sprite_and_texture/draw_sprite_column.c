@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 22:22:21 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:18:12 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static inline int	get_texture_y(int screen_y, int sprite_height,
 															int texture_height)

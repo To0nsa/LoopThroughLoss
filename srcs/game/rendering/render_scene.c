@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:06:19 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 01:52:31 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:25:18 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 void	render_scene(t_game *game, double delta_time)
 {
@@ -18,6 +18,7 @@ void	render_scene(t_game *game, double delta_time)
 	int		x;
 	double	*z_buffer;
 
+	(void)delta_time;
 	z_buffer = x_calloc(game, WIN_W, sizeof(double));
 	game->img.ptr = mlx_new_image(game->mlx, WIN_W, WIN_H);
 	game->img.addr = mlx_get_data_addr(game->img.ptr, &game->img.bpp,
@@ -29,12 +30,8 @@ void	render_scene(t_game *game, double delta_time)
 	while (x < WIN_W)
 		raycast(game, &ray, &x, z_buffer);
 	draw_entities(game, z_buffer);
-	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->window->ptr, game->img.ptr, 0, 0);
 	draw_npc_dialogue(game);
-	draw_follow_state(game);
-	draw_bucket_state(game);
-	draw_splash(game, &game->player, delta_time);
 	draw_temp_message(game);
 	mlx_destroy_image(game->mlx, game->img.ptr);
 	free(z_buffer);

@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:38:38 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:14:06 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static void	sort_entities(t_entity *entities, int count, t_player *player)
 {

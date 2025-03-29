@@ -6,14 +6,14 @@
 #    By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 18:23:28 by nlouis            #+#    #+#              #
-#    Updated: 2025/03/27 08:56:18 by nlouis           ###   ########.fr        #
+#    Updated: 2025/03/29 15:12:45 by nlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -I libft/include -I ./include -I mlx/ -I raylib/src # -g -fsanitize=address -fsanitize=undefined
 
-NAME = LoopingThroughLoss
+NAME = LoopThroughLoss
 
 SRCS := $(shell find srcs -name "*.c")
 
@@ -33,7 +33,7 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	make -C libft
 
-$(OBJSDIR)/%.o: %.c include/cub3d.h
+$(OBJSDIR)/%.o: %.c include/LoopThroughLoss.h
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 

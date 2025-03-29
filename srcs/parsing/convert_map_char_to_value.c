@@ -6,48 +6,33 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:39:09 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/19 10:25:23 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:36:44 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static void	spawn_entity_at_position(t_game *game, char cell,
 															double x, double y)
 {
-	if (cell == 'K')
-		spawn_witch_kitty(game, x, y);
-	else if (cell == 'C')
-		spawn_calico_kitty(game, x, y);
-	else if (cell == 'D')
-		spawn_door(game, x, y);
+	if (cell == 'A')
+		spawn_armchair(game, x, y);
 	else if (cell == 'F')
-		spawn_fire_spirit(game, x, y);
-	else if (cell == 'P')
-		spawn_well(game, x, y);
-	else if (cell == 'B')
-		spawn_bucket(game, x, y);
+		spawn_floorlamp(game, x, y);
 	else if (cell == 'T')
-		spawn_tree(game, x, y);
-	else if (cell == 'I')
-		spawn_key(game, x, y);
+		spawn_coffee_table(game, x, y);
+	else if (cell == 'C')
+		spawn_console(game, x, y);
 	else if (cell == 'X')
-		spawn_exit_door(game, x, y);
+		spawn_chair(game, x, y);
+	else if (cell == 'M')
+		spawn_mother(game, x, y);
 }
 
 static int	get_entity_map_value(char cell)
 {
-	if (cell == 'K' || cell == 'C' || cell == 'F'
-		|| cell == 'T' || cell == 'I')
-		return (FREE_SPACE);
-	if (cell == 'D')
-		return (DOOR);
-	if (cell == 'X')
-		return (EXIT_DOOR);
-	if (cell == 'P')
-		return (WELL);
-	if (cell == 'B')
-		return (BUCKET);
+	if (cell == 'A' || cell == 'F' || cell == 'T' || cell == 'C')
+		return (FURNITURE);
 	return (EMPTY);
 }
 

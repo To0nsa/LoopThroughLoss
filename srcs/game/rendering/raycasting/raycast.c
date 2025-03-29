@@ -6,15 +6,15 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:21:19 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:21:01 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 {
-	t_door	*door;
+/* 	t_door	*door;
 
 	if (ray->hit == 2)
 	{
@@ -36,7 +36,9 @@ static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 			return (&game->tex.so);
 		else
 			return (&game->tex.no);
-	}
+	} */
+	(void)ray;
+	return (&game->tex.walls);
 }
 
 static inline int	get_tex_color_no_alpha(t_texture *tex, int x, int y)

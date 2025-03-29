@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:16:45 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:15:36 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	init_texture_as_sprite(t_sprite_draw *data, t_player player,
 									t_texture *texture, t_dpoint texture_pos)

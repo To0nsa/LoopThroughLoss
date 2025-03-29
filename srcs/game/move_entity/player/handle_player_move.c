@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:28:44 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:34:16 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 void	handle_player_moves(t_game *game, double delta_time)
 {

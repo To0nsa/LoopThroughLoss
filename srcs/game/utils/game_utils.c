@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:08:10 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/23 16:28:52 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:37:18 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 double	get_delta_time(void)
 {
@@ -53,12 +53,12 @@ int	handle_game_state(t_game *game)
 {
 	if (game->state == GAME_OVER)
 	{
-		draw_lose_message(game);
+		// draw_lose_message(game);
 		return (0);
 	}
 	else if (game->state == WIN)
 	{
-		draw_win_message(game);
+		// draw_win_message(game);
 		return (0);
 	}
 	else if (game->state != RUNNING)

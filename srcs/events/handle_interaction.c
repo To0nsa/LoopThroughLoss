@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:13:03 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:36:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 14:08:11 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	interact_with_sorted_entities(t_game *game)
 {
@@ -42,8 +42,6 @@ void	handle_interaction(t_game *game)
 	if (continue_npc_dialogue(game))
 		return ;
 	if (interact_with_sorted_entities(game))
-		return ;
-	if (!handle_npc_chase(game))
 		return ;
 	interact_with_door(game);
 }

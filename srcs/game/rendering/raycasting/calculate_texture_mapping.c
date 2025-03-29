@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:52:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:19:09 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:23:52 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-static double	get_exact_wall_position(t_game *game, t_ray *ray)
+/* static double	get_exact_wall_position(t_game *game, t_ray *ray)
 {
 	double	offset;
 	double	wall_position;
@@ -28,9 +28,9 @@ static double	get_exact_wall_position(t_game *game, t_ray *ray)
 		wall_position = game->player.pos.x + offset;
 	}
 	return (wall_position);
-}
+} */
 
-static double	adjust_for_door_offset(t_game *game, t_ray *ray, double wall_x)
+/* static double	adjust_for_door_offset(t_game *game, t_ray *ray, double wall_x)
 {
 	t_door	*door;
 
@@ -44,7 +44,7 @@ static double	adjust_for_door_offset(t_game *game, t_ray *ray, double wall_x)
 		}
 	}
 	return (wall_x);
-}
+} */
 
 static int	flip_texture_x_if_needed(t_ray *ray, int tex_x)
 {
@@ -56,12 +56,13 @@ static int	flip_texture_x_if_needed(t_ray *ray, int tex_x)
 
 void	calculate_texture_mapping(t_game *game, t_ray *ray)
 {
-	double	exact_pos;
-	double	wall_fraction;
+	// double	exact_pos;
+	// double	wall_fraction;
 
-	exact_pos = get_exact_wall_position(game, ray);
-	wall_fraction = get_fractional_part(exact_pos);
-	ray->wall_x = adjust_for_door_offset(game, ray, wall_fraction);
+	(void)game;
+	// exact_pos = get_exact_wall_position(game, ray);
+	// wall_fraction = get_fractional_part(exact_pos);
+	// ray->wall_x = adjust_for_door_offset(game, ray, wall_fraction);
 	ray->tex.x = (int)(ray->wall_x * (double)TEX_W);
 	ray->tex.x = flip_texture_x_if_needed(ray, ray->tex.x);
 	ray->step = (double)TEX_H / ray->line_height;

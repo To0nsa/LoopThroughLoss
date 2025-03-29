@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 23:50:07 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/23 11:05:28 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 bool	is_any_npc_talking(t_game *game)
 {

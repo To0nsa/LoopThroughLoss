@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:51:19 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/21 11:34:08 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 int	pause_game(t_game *game)
 {

@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:01:12 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:18:43 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:24:27 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static void	advance_dda_step(t_ray *ray)
 {
@@ -44,7 +44,7 @@ static bool	is_wall_hit(t_game *game, t_ray *ray)
 	return (false);
 }
 
-static bool	is_closed_door_hit(t_ray *ray, t_door *door)
+/* static bool	is_closed_door_hit(t_ray *ray, t_door *door)
 {
 	if (door && door->offset <= 0.0)
 	{
@@ -52,9 +52,9 @@ static bool	is_closed_door_hit(t_ray *ray, t_door *door)
 		return (true);
 	}
 	return (false);
-}
+} */
 
-static bool	is_partially_open_door_hit(t_game *game, t_ray *ray, t_door *door)
+/* static bool	is_partially_open_door_hit(t_game *game, t_ray *ray, t_door *door)
 {
 	double	door_x;
 
@@ -73,24 +73,24 @@ static bool	is_partially_open_door_hit(t_game *game, t_ray *ray, t_door *door)
 		return (true);
 	}
 	return (false);
-}
+} */
 
 void	perform_dda(t_game *game, t_ray *ray)
 {
-	t_door	*door;
+	//t_door	*door;
 
 	while (ray->hit == 0)
 	{
 		advance_dda_step(ray);
 		if (is_wall_hit(game, ray))
 			break ;
-		if (game->map->matrix[ray->map.y][ray->map.x] == DOOR
+/* 		if (game->map->matrix[ray->map.y][ray->map.x] == DOOR
 			|| game->map->matrix[ray->map.y][ray->map.x] == EXIT_DOOR)
 		{
 			door = find_door_at(game, ray->map);
 			if (is_closed_door_hit(ray, door)
 				|| is_partially_open_door_hit(game, ray, door))
 				break ;
-		}
+		} */
 	}
 }

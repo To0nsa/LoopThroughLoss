@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:46:07 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/23 16:07:52 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:16:51 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-t_dial_phase	get_witch_kitty_phase(t_story_state *story)
+/* t_dial_phase	get_witch_kitty_phase(t_story_state *story)
 {
 	if (!story->has_spoken_to_witch)
 		return (PHASE_0);
@@ -56,4 +56,4 @@ t_dial_phase	get_fire_spirit_phase(t_story_state *story)
 	else if (story->fireball == UNLOCKED)
 		return (PHASE_1);
 	return (IDLE);
-}
+} */

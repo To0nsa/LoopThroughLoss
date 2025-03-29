@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 16:11:14 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:39:53 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:17:00 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-static void	update_sibling_progression(t_game *game, t_npc *calico)
+/* static void	update_sibling_progression(t_game *game, t_npc *calico)
 {
 	t_story_state	*story;
 
@@ -86,4 +86,4 @@ void	update_npc_story(t_game *game, t_npc *calico, t_npc *witch,
 	update_sibling_progression(game, calico);
 	handle_sibling_events(game, calico, witch, fire_spirit);
 	update_fireball_story(game, fire_spirit);
-}
+} */

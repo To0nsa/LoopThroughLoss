@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:30:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/23 16:40:41 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:31:21 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-void	free_tex_frames(t_game *game, t_texture *frames, int count)
+/* void	free_tex_frames(t_game *game, t_texture *frames, int count)
 {
 	int	j;
 
@@ -82,4 +82,4 @@ void	free_npcs(t_game *game)
 		i++;
 	}
 	free(game->npcs);
-}
+} */

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	is_position_near_npc(t_game *game, t_dpoint next_pos)
 {
@@ -59,7 +59,7 @@ static bool	is_door_walkable_player(t_game *game, t_point grid_pos)
 	door = find_door_at(game, grid_pos);
 	if (!door)
 		return (true);
-	return (door->state == DOOR_OPEN);
+	return (door->state == OPEN);
 }
 
 bool	is_player_move_valid(t_game *game, t_dpoint next_pos)

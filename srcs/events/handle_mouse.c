@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:59:48 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 00:51:27 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	is_mouse_inside_window(t_mouse_data *m, t_window *window)
 {

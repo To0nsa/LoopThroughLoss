@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 13:28:29 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 19:37:32 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:31:06 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
-static void	free_map(t_map *map)
+/* static void	free_map(t_map *map)
 {
 	ft_free_array((void **)map->file_content);
 	ft_free_array((void **)map->map_layout);
@@ -70,4 +70,4 @@ void	free_game(t_game *game)
 		mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	free(game);
-}
+} */

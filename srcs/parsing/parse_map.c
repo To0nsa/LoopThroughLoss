@@ -6,20 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:06:01 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/01 01:44:20 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:30:24 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
-
-static void	validate_config(t_game *game, t_map *map)
-{
-	if (!map->conf.tex_no || !map->conf.tex_so
-		|| !map->conf.tex_we || !map->conf.tex_ea)
-		error(game, "Missing texture configuration");
-	if (map->conf.floor_color == -1 || map->conf.ceiling_color == -1)
-		error(game, "Missing color configuration");
-}
+#include "LoopThroughLoss.h"
 
 static void	parse_map_layout(t_game *game, t_map *map)
 {
@@ -45,21 +36,7 @@ static void	parse_map_layout(t_game *game, t_map *map)
 
 static void	parse_content(t_game *game, t_map *map)
 {
-	int	i;
-	int	map_start;
-
-	i = 0;
-	map_start = -1;
-	while (map->file_content[i])
-	{
-		if (!process_config(game, map, i, &map_start))
-			break ;
-		i++;
-	}
-	if (map_start == -1)
-		error(game, "No map layout found in file");
-	validate_config(game, map);
-	map->map_layout = x_copy_strarray(game, map->file_content + map_start);
+	map->map_layout = x_copy_strarray(game, map->file_content);
 	parse_map_layout(game, map);
 }
 

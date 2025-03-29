@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:13:27 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:33:37 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static bool	is_blocked(t_game *game, t_dpoint pos)
 {

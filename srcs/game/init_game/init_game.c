@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:05 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 01:45:01 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:26:39 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "LoopThroughLoss.h"
 
 static t_map	*init_map(t_game *game, char *filename)
 {
@@ -18,8 +18,8 @@ static t_map	*init_map(t_game *game, char *filename)
 
 	map = x_calloc(game, 1, sizeof(t_map));
 	map->filename = filename;
-	map->conf.floor_color = -1;
-	map->conf.ceiling_color = -1;
+	map->floor_color = FLOOR_COLOR_DL;
+	map->ceiling_color = CEILING_COLOR_DL;
 	return (map);
 }
 
@@ -46,7 +46,7 @@ t_game	*init_game(char *filename)
 	parse_map(game, game->map);
 	game->window = x_calloc(game, 1, sizeof(t_window));
 	init_window(game, game->window);
-	load_game_textures(game, game->map->conf);
+	load_game_textures(game);
 	init_player(game, &game->player);
 	init_background(game);
 	game->state = RUNNING;

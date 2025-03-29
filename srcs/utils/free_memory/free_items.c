@@ -6,11 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:40:31 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/24 20:13:24 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:30:58 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+/* #include "LoopThroughLoss.h"
 
 void	free_single_item(t_game *game, t_item *item)
 {
@@ -37,4 +37,4 @@ void	free_items(t_game *game)
 		i++;
 	}
 	free(game->items);
-}
+} */
