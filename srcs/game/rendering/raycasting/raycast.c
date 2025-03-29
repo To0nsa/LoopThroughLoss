@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:21:01 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 00:07:19 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 {
-/* 	t_door	*door;
+	t_door	*door;
 
 	if (ray->hit == 2)
 	{
 		door = find_door_at(game, ray->map);
-		if (door && door->type == EXIT_DOOR_TYPE)
-			return (&game->tex.exit_door);
-		return (&game->tex.door);
+		if (door && door->type == DOOR_T)
+			return (&game->tex.door);
 	}
 	if (ray->side == 0)
 	{
 		if (ray->dir.x > 0)
-			return (&game->tex.ea);
+			return (&game->tex.walls);
 		else
-			return (&game->tex.we);
+			return (&game->tex.walls);
 	}
 	else
 	{
 		if (ray->dir.y > 0)
-			return (&game->tex.so);
+			return (&game->tex.walls);
 		else
-			return (&game->tex.no);
-	} */
+			return (&game->tex.walls);
+	}
 	(void)ray;
 	return (&game->tex.walls);
 }

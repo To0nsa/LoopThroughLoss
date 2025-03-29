@@ -6,18 +6,47 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:28:44 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 13:30:12 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 23:48:34 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
+
+static bool	is_any_npc_talking(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->npc_count)
+	{
+		if (game->npcs[i]->state == SPEAK)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+static bool	is_answering_machine_on(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->item_count)
+	{
+		if (ft_strcmp(game->items[i]->name, "answering_machine") == 0
+			&& game->items[i]->state == ON)
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 void	handle_player_moves(t_game *game, double delta_time)
 {
 	t_player	*player;
 
 	player = &game->player;
-	if (is_any_npc_talking(game))
+	if (is_any_npc_talking(game) || is_answering_machine_on(game))
 		return ;
 	if (game->keys[UP])
 		move_player_forward(game, player, delta_time);

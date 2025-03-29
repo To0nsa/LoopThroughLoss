@@ -6,11 +6,33 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:34:03 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:35:49 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 22:29:18 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
+
+static void	setup_temp_sprite(t_sprite *temp, t_npc *npc, t_texture *tex)
+{
+	ft_memset(temp, 0, sizeof(t_sprite));
+	temp->pos = npc->pos;
+	temp->size = npc->sprite.size;
+	temp->idle_frames_count = 1;
+	temp->idle_frames = tex;
+}
+
+static void	draw_mother(t_game *game, t_npc *npc, double *z_buffer)
+{
+	t_sprite	temp;
+
+	if (npc->state == NOT_PRESENT)
+		return ;
+	if (npc->state == BLURRY)
+		setup_temp_sprite(&temp, npc, &npc->texture_blurry);
+	else
+		setup_temp_sprite(&temp, npc, &npc->texture_idle);
+	draw_sprite(game, game->player, &temp, z_buffer);
+}
 
 static void	draw_npc(t_game *game, t_npc *npc, double *z_buffer)
 {

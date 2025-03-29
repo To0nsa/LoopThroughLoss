@@ -4,8 +4,10 @@
 # define DIALOGUE_BOX	"./assets/dialogue/dialogue_box.xpm"
 
 # define WTEST "./assets/textures/walls/wallTexture.xpm"
+# define DTEST "./assets/textures/door/door.xpm"
 
 # define MOTHER "./assets/textures/npc/mother.xpm"
+# define MOTHER_BLURRY "./assets/textures/npc/mother_blurry.xpm"
 
 # define ITEM_AM			"assets/textures/items/answering_machine.xpm"
 # define ITEM_CHAIR_UP		"./assets/textures/items/chair.xpm"

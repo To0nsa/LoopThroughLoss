@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:33:37 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:33:46 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 00:41:23 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,25 @@ static void	draw_fps(t_game *game)
 	free(msg);
 }
 
+void	block_interactions_for_seconds(t_game *game, double seconds)
+{
+	game->interactions_blocked = true;
+	game->interaction_block_timer = seconds;
+}
+
+static void update_interaction_block_timer(t_game *game, double delta_time)
+{
+    if (game->interactions_blocked)
+    {
+        game->interaction_block_timer -= delta_time;
+        if (game->interaction_block_timer <= 0)
+        {
+            game->interactions_blocked = false;
+            game->interaction_block_timer = 0;
+        }
+    }
+}
+
 int	game_loop(t_game *game)
 {
 	double	delta_time;
@@ -46,14 +65,21 @@ int	game_loop(t_game *game)
 		return (0);
 	delta_time = get_delta_time();
 	update_fps(game, delta_time);
+	
 	handle_player_moves(game, delta_time);
 	handle_mouse_movement(game, game->window);
+	
+	update_transition(game, &game->transition, delta_time);
+	update_interaction_block_timer(game, delta_time);
+	
+	handle_player_moves(game, delta_time);
 	update_entities_sort(game);
-	// update_all_npcs(game, delta_time);
-	// update_items(game, delta_time);
-	// update_story(game);
-	// update_temp_message(game, delta_time);
+	update_story(game, delta_time);
+
+	update_temp_message(game, delta_time);
+	
 	render_scene(game, delta_time);
+	
 	draw_fps(game);
 	return (0);
 }

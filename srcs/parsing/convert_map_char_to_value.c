@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:39:09 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:36:44 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 00:17:52 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	spawn_entity_at_position(t_game *game, char cell,
 	else if (cell == 'T')
 		spawn_coffee_table(game, x, y);
 	else if (cell == 'C')
-		spawn_console(game, x, y);
+		spawn_answering_machine(game, x, y);
 	else if (cell == 'X')
 		spawn_chair(game, x, y);
 	else if (cell == 'M')
@@ -53,6 +53,11 @@ int	convert_map_char_to_value(t_game *game, t_map *map, int i, int j)
 		return (CONF_DIR);
 	else if (cell == '0')
 		return (FREE_SPACE);
+	else if (cell == 'D')
+	{
+		spawn_door(game, (double)j, (double)i);
+		return (DOOR);
+	}
 	else
 		return (spawn_entity(game, cell, j, i));
 }

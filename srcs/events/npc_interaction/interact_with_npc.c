@@ -6,13 +6,13 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:09:21 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 14:03:50 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 23:56:00 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
 
-t_npc	*find_closest_npc(t_game *game, double max_distance)
+static t_npc	*find_closest_npc(t_game *game, double max_distance)
 {
 	t_npc	*closest_npc;
 	double	closest_dist;
@@ -35,6 +35,44 @@ t_npc	*find_closest_npc(t_game *game, double max_distance)
 		i++;
 	}
 	return (closest_npc);
+}
+
+static bool	advance_npc_dialogue(t_npc *npc, t_story *story)
+{
+	if (npc->state != SPEAK)
+		return (false);
+	npc->dialogue.current_line++;
+	if (npc->dialogue.current_line
+		>= npc->dialogue.dialogue_count[npc->dialogue.phase])
+	{
+		npc->dialogue.current_line = 0;
+		npc->state = IDLE;
+		if (ft_strcmp(npc->type, "mother") == 0)
+			story->has_spoken_to_mother = true;
+	}
+	return (true);
+}
+
+bool	continue_npc_dialogue(t_game *game)
+{
+	t_npc	*npc;
+
+	npc = find_closest_npc(game, 2.0);
+	if (!npc || npc->state != SPEAK)
+		return (false);
+	advance_npc_dialogue(npc, &game->story);
+	return (true);
+}
+
+static bool	handle_npc_dialogue(t_game *game)
+{
+	t_npc	*npc;
+
+	npc = find_closest_npc(game, 2.0);
+	if (!npc || npc->state == SPEAK)
+		return (false);
+	npc->state = SPEAK;
+	return (true);
 }
 
 bool	interact_with_npc(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:16:05 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 23:23:28 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,55 +37,9 @@ static t_item	*find_closest_item(t_game *game, double range)
 	return (closest_item);
 }
 
-/* static void	handle_single_item_removal(t_game *game, t_item *item_to_remove)
-{
-	free_single_item(game, item_to_remove);
-	free(game->items);
-	game->items = NULL;
-	game->item_count = 0;
-}
-
-static t_item	**create_new_item_list(t_game *game, t_item *item_to_remove)
-{
-	t_item	**new_list;
-	int		i;
-	int		j;
-
-	new_list = x_calloc(game, game->item_count - 1, sizeof(t_item *));
-	i = 0;
-	j = 0;
-	while (i < game->item_count)
-	{
-		if (game->items[i] != item_to_remove)
-		{
-			new_list[j] = game->items[i];
-			j++;
-		}
-		else
-			free_single_item(game, game->items[i]);
-		i++;
-	}
-	return (new_list);
-}
-
-static void	remove_item_from_list(t_game *game, t_item *item_to_remove)
-{
-	t_item	**new_list;
-
-	if (game->item_count <= 1)
-	{
-		handle_single_item_removal(game, item_to_remove);
-		return ;
-	}
-	new_list = create_new_item_list(game, item_to_remove);
-	free(game->items);
-	game->items = new_list;
-	game->item_count--;
-} */
-
 bool	interact_with_item(t_game *game)
 {
-	t_story *story	= game->story;
+	t_story *story	= &game->story;
 	t_item	*item	= find_closest_item(game, 1.5);
 	if (!item)
 		return (false);
@@ -95,8 +49,11 @@ bool	interact_with_item(t_game *game)
 			&& story->loop_number == THIRD_LOOP
 			&& ft_strcmp(item->name, "answering_machine") == 0)
 		{
-			show_temp_message(game, 3.0, "You are listening to the answering machine.");
+			item->state = ON;
+			show_temp_message(game, 8.0, "You are listening to the answering machine.");
 			// play denial loop voice message
+			block_interactions_for_seconds(game, 8.0);
+			story->reset_timer = 8.0;
 		}
 		return (true);
 	}

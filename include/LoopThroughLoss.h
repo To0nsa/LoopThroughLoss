@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:52:23 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 00:16:59 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef enum e_char_value
 {
 	FREE_SPACE,
 	WALL,
+	DOOR,
 	CONF_DIR,
 	FURNITURE,
 	EMPTY
@@ -214,16 +215,11 @@ typedef struct s_sprite
 
 typedef enum e_dial_phase
 {
-	REPEAT,
 	PHASE_0,
 	PHASE_1,
 	PHASE_2,
 	PHASE_3,
-	PHASE_4,
-	PHASE_5,
-	PHASE_6,
-	PHASE_7,
-	PHASE_8
+	PHASE_4
 }	t_dial_phase;
 
 # define DENIAL_LOOP		0
@@ -242,6 +238,8 @@ typedef struct s_story
 	int		state;
 	int		loop_number;
 	bool	has_spoken_to_mother;
+	bool	has_interacted_with_door;
+	double	reset_timer;
 } t_story;
 
 typedef struct s_dial
@@ -256,7 +254,9 @@ typedef struct s_dial
 typedef enum e_npc_state
 {
 	IDLE,
-	SPEAK
+	SPEAK,
+	BLURRY,
+	NOT_PRESENT
 }	e_npc_state;
 
 typedef struct s_npc
@@ -265,7 +265,8 @@ typedef struct s_npc
 	t_dpoint	pos;
 	e_npc_state	state;
 	t_sprite	sprite;
-	t_texture	texture;
+	t_texture	texture_idle;
+	t_texture	texture_blurry;
 	t_dial		dialogue;
 }	t_npc;
 
@@ -279,7 +280,7 @@ typedef enum e_door_state
 
 typedef enum e_door_type
 {
-	DOOR
+	DOOR_T
 }	t_door_type;
 
 typedef struct s_door
@@ -287,16 +288,25 @@ typedef struct s_door
 	t_door_type		type;
 	t_dpoint		pos;
 	t_door_state	state;
+	double			offset;
 }	t_door;
+
+typedef enum e_item_state
+{
+	IDLE_ITEM,
+	ON,
+	BROKEN
+}	t_item_state;
 
 typedef struct s_item
 {
-	char		*type;
-	char		*name;
-	t_dpoint	pos;
-	t_texture	texture;
-	t_sprite	sprite;
-	bool		is_interactable;
+	char			*type;
+	char			*name;
+	t_dpoint		pos;
+	t_texture		texture;
+	t_sprite		sprite;
+	t_item_state	state;
+	bool			is_interactable;
 }	t_item;
 
 typedef enum e_entity_type
@@ -315,6 +325,7 @@ typedef struct s_entity
 typedef struct s_tex
 {
 	t_texture	walls;
+	t_texture	door;
 	t_texture	dialogue_box;
 }	t_tex;
 
@@ -330,18 +341,36 @@ typedef struct s_player
 {
 	char		conf_dir;
 	t_dpoint	pos;
+	t_dpoint	start_pos;
 	t_dpoint	last_pos;
 	t_dpoint	facing_dir;		// Direction vector
 	t_dpoint	view_plane;		// Camera plane vector: perp to facing_dir
 	double		rot_speed;		// (in radians)
 	double		move_speed;
 	double		facing_angle; 	// (in radians)
+	double		start_facing_angle;
 }	t_player;
+
+typedef enum e_fade_state
+{
+	FADE_IDLE,
+	FADE_IN,
+	FADE_OUT
+}	t_fade_state;
+
+typedef struct s_transition
+{
+	bool			on;
+	double			timer;
+	double			duration;
+	double			fade_alpha; // 0.0 (transparent) to 1.0 (fully black)
+	t_fade_state	state;
+}	t_transition;
 
 typedef struct s_game
 {
 	t_game_state	state;
-	t_story			*story;
+	t_story			story;
 	t_map			*map;
 	void			*mlx;
 	t_window		*window;
@@ -349,6 +378,7 @@ typedef struct s_game
 	t_tex			tex;
 	t_img			img;
 	t_img			bg_img;
+	t_img			fade_img;
 	t_npc			**npcs;
 	int				npc_count;
 	t_door			**doors;
@@ -359,6 +389,9 @@ typedef struct s_game
 	t_entity		*entities;
     int				entity_count;
 	bool			keys[66000];
+	bool			interactions_blocked;
+	double			interaction_block_timer;
+	t_transition	transition;
 	bool			temp_msg_visible;
 	char			temp_msg[50];
 	double			temp_msg_timer;
@@ -368,12 +401,22 @@ typedef struct s_game
 }	t_game;
 
 void	spawn_armchair(t_game *game, double x, double y);
-void	spawn_console(t_game *game, double x, double y);
+void	spawn_answering_machine(t_game *game, double x, double y);
 void	spawn_floorlamp(t_game *game, double x, double y);
 void	spawn_coffee_table(t_game *game, double x, double y);
 void	spawn_chair(t_game *game, double x, double y);
 void	spawn_mother(t_game *game, double x, double y);
-void	draw_mother(t_game *game, t_npc *npc, double *z_buffer);
+
+void	reset_player(t_game *game, t_player *player);
+
+void	block_interactions_for_seconds(t_game *game, double seconds);
+
+void	start_fade_out(t_transition *transition);
+
+void	init_transition(t_game *game, t_transition *transition, double duration);
+void	update_transition(t_game *game, t_transition *transition, double delta_time);
+void	render_transition(t_game *game, t_transition *transition);
+
 
 // UTILS
 void	error(t_game *game, char *err_msg);
@@ -408,11 +451,7 @@ void	parse_map(t_game *game, t_map *map);
 // INITIALIZATION
 t_game	*init_game(char *filename);
 // void	load_sprite_frames_npc(t_game *game, t_sprite *sprite);
-void	update_enemy_npc(t_game *game, t_npc *npc, double delta_time);
 void	update_all_npcs(t_game *game, double delta_time);
-bool	move_npc(t_game *game, t_npc *npc, t_dpoint target, double delta_time);
-void	move_npc_patrol(t_game *game, t_npc *npc, double delta_time);
-void	move_npc_follow(t_game *game, t_npc *npc, double delta_time);
 
 // TEMP_MESSAGE
 void	update_temp_message(t_game *game, double delta_time);
@@ -420,28 +459,8 @@ void	show_temp_message(t_game *game, double duration, const char *message);
 void	draw_temp_message(t_game *game);
 
 // NPC
-// void	init_npc_animation(t_game *game, t_sprite *sprite);
-void	init_npc_pathfinding(t_game *game, t_npc *npc);
-void	generate_npc_waypoints(t_npc *npc, t_game *game);
-void	update_npc_list(t_game *game, t_npc *npc);
-void	spawn_witch_kitty(t_game *game, double x, double y);
-void	spawn_calico_kitty(t_game *game, double x, double y);
-int		get_walk_animation_base_index(int walk_block);
-int		get_walk_block(t_npc *npc, t_player *player);
-void	draw_kitty_npc(t_game *game, t_npc *npc, double *z_buffer);
-void	draw_fire_spirit(t_game *game, t_npc *npc, double *z_buffer);
-void	play_movement_animation(t_npc *npc, double delta_time);
-// void	play_wait_animation(t_npc *npc, double delta_time);
-// void	play_speak_animation(t_npc *npc, double delta_time);
-void	play_fire_spirit_idle_animation(t_npc *npc, double delta_time);
-void	play_fire_spirit_hit_animation(t_npc *npc, double delta_time);
-void	change_fire_spirit_behavior(t_game *game, t_npc *npc);
 // void	free_npc_textures(t_game *game, t_sprite *sprite);
-void	free_npc_waypoints(t_npc *npc);
-void	spawn_fire_spirit(t_game *game, double x, double y);
-bool	has_line_of_sight(t_game *game, t_dpoint src, t_dpoint target);
-void	update_npc_follow_path(t_game *game, t_player *player, t_npc *npc);
-void	update_npc(t_game *game, t_npc *npc, double delta_time);
+
 
 // ITEM
 
@@ -452,12 +471,10 @@ void	update_item_list(t_game *game, t_item *item);
 void	update_door_list(t_game *game, t_door *door);
 void	spawn_door(t_game *game, double x, double y);
 t_door	*find_door_at(t_game *game, t_point pos);
-t_door	*find_closest_door(t_game *game, double range);
 
 // RENDERING
 void	calculate_texture_mapping(t_game *game, t_ray *ray);
 void	calculate_ray_properties(t_game *game, t_ray *ray);
-int		get_current_frame(double anim_start, int num_frames, int frame_duration_ms);
 void	init_ray(t_game *game, t_ray *ray, int x);
 void	init_dda_ray(t_game *game, t_ray *ray);
 void	raycast(t_game *game, t_ray *ray, int *x, double *z_buffer);
@@ -466,7 +483,6 @@ void	render_scene(t_game *game, double delta_time);
 void	draw_pause_message(t_game *game);
 void	draw_npc_dialogue(t_game *game);
 void	init_player(t_game *game, t_player *player);
-void	set_frame_sizes(t_texture *frames, int count, t_point size);
 // void	load_sprite_animation(t_game *game, t_texture **frames, char **paths, int frame_count);
 void	draw_texture(t_game *game, t_texture *texture, t_dpoint texture_pos, double *z_buffer);
 void	draw_entities(t_game *game, double *z_buffer);
@@ -484,12 +500,9 @@ bool	init_sprite_draw_data(t_sprite_draw *data, t_player player, t_sprite *sprit
 // HOOKS
 bool	interact_with_door(t_game *game);
 bool	interact_with_item(t_game *game);
-t_npc	*find_closest_npc(t_game *game, double max_distance);
 bool	interact_with_npc(t_game *game);
-bool	advance_npc_dialogue(t_npc *npc, t_story *story);
-void	update_story(t_game *game);
-bool	handle_npc_dialogue(t_game *game);
 bool	continue_npc_dialogue(t_game *game);
+void	update_story(t_game *game, double delta_time);
 void	handle_interaction(t_game *game);
 int		pause_game(t_game *game);
 void	handle_event_hooks(t_game *game, t_window *window);
@@ -499,9 +512,7 @@ int		game_loop(t_game *game);
 void	handle_mouse_movement(t_game *game, t_window *window);
 bool	is_map_position_valid_player(t_game *game, t_dpoint pos);
 bool	is_within_bounds(t_game *game, t_point pos);
-bool	is_any_npc_talking(t_game *game);
 bool	is_player_move_valid(t_game *game, t_dpoint pos);
-bool	is_wall(t_game *game, t_point pos);
 void	handle_player_moves(t_game *game, double delta_time);
 void	rotate_player_left(t_player *player, double delta_time);
 void	rotate_player_right(t_player *player, double delta_time);
@@ -521,7 +532,6 @@ int		**x_create_matrix(t_game *game, int row_count, int col_count);
 char	*x_itoa(t_game *game, int n);
 
 t_dial_phase	get_story_phase(t_story *story);
-void			allocate_dialogues(t_game *game, t_dial *dialog, char *dialogues[][11], int phase_count);
 
 // MUSIC
 

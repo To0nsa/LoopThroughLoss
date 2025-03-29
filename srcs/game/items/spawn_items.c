@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:00:12 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 14:24:08 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 21:22:46 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	spawn_armchair(t_game *game, double x, double y)
 	update_item_list(game, item);
 }
 
-void	spawn_console(t_game *game, double x, double y)
+void	spawn_answering_machine(t_game *game, double x, double y)
 {
 	t_item		*item;
 	t_dpoint	pos;
@@ -34,7 +34,7 @@ void	spawn_console(t_game *game, double x, double y)
 	item = x_calloc(game, 1, sizeof(t_item));
 	pos = (t_dpoint){x, y};
 	item->type = "static";
-	item->name = "console";
+	item->name = "answering_machine";
 	item->pos = (t_dpoint){pos.x + 0.5, pos.y + 0.5};
 	load_single_xpm(game, &item->texture, FURNITURE_C, game->mlx);
 	update_item_list(game, item);

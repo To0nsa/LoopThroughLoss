@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:13:03 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 14:08:11 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 22:03:30 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static bool	interact_with_sorted_entities(t_game *game)
 
 void	handle_interaction(t_game *game)
 {
+	if (game->interactions_blocked)
+		return ;
 	if (continue_npc_dialogue(game))
 		return ;
 	if (interact_with_sorted_entities(game))

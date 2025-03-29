@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 20:38:34 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:48:43 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 23:52:03 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,18 @@ void	init_player(t_game *game, t_player *player)
 	(void)game;
 	player->pos.x += 0.5;
 	player->pos.y += 0.5;
+	player->start_pos = player->pos;
 	player->rot_speed = 3;
 	player->move_speed = 1;
 	set_player_facing_angle(player);
+	player->facing_angle = player->start_facing_angle;
+	set_player_direction_and_view_plane(player);
+}
+
+void	reset_player(t_game *game, t_player *player)
+{
+	(void)game;
+	player->pos = player->start_pos;
+	player->facing_angle = player->start_facing_angle;
 	set_player_direction_and_view_plane(player);
 }

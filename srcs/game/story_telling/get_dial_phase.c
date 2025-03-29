@@ -6,54 +6,23 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 09:46:07 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:16:51 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/29 23:34:51 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
 
-/* t_dial_phase	get_witch_kitty_phase(t_story_state *story)
+t_dial_phase	get_mother_dial_phase(t_story *story)
 {
-	if (!story->has_spoken_to_witch)
-		return (PHASE_0);
-	else if (story->sibling == SEARCHING && story->fireball >= LOCATED)
-		return (PHASE_1);
-	else if (story->sibling == LOCATED)
+	if (story->state == DENIAL_LOOP)
+	{
+		if (story->loop_number == FIRST_LOOP)
+			return (PHASE_0);
+		else
+			return (PHASE_1);
+	}
+	else if (story->state == ANGER_LOOP)
 		return (PHASE_2);
-	else if (story->sibling == FOUND || story->sibling == WAITING)
-		return (PHASE_3);
-	else if (story->fireball >= LOCATED && story->fireball < SAVED)
-		return (PHASE_4);
-	else if (story->sibling == SAVED
-		&& (story->key != FOUND || story->exit != FOUND))
-		return (PHASE_5);
-	else if (story->sibling == UNLOCKED)
-		return (PHASE_6);
-	return (IDLE);
+	return (PHASE_0);
 }
-
-t_dial_phase	get_calico_phase(t_story_state *story)
-{
-	if (!story->has_spoken_to_calico)
-		return (PHASE_0);
-	else if (story->fireball == LOCATED)
-		return (PHASE_1);
-	else if (story->sibling < SAVED && story->fireball == EXIT_SEARCH)
-		return (PHASE_2);
-	else if (story->sibling < SAVED && story->fireball == SAVED)
-		return (PHASE_3);
-	else if (story->sibling == SAVED)
-		return (PHASE_4);
-	else if (story->sibling == UNLOCKED)
-		return (PHASE_5);
-	return (IDLE);
-}
-
-t_dial_phase	get_fire_spirit_phase(t_story_state *story)
-{
-	if (!story->has_spoken_to_fire_spirit)
-		return (PHASE_0);
-	else if (story->fireball == UNLOCKED)
-		return (PHASE_1);
-	return (IDLE);
-} */
+	
