@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 22:57:55 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 23:06:20 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,13 +437,11 @@ bool	interact_with_npc(t_game *game);
 bool	continue_npc_dialogue(t_game *game);
 void	update_story(t_game *game, double delta_time);
 void	handle_interaction(t_game *game);
-int		pause_game(t_game *game);
 void	handle_events(t_game *game);
 
 // GAME LOOP
 int		game_loop(t_game *game);
 bool	is_map_position_valid_player(t_game *game, t_dpoint pos);
-bool	is_within_bounds(t_game *game, t_point pos);
 bool	is_player_move_valid(t_game *game, t_dpoint pos);
 void	handle_player_moves(t_game *game, double delta_time);
 void	rotate_player_left(t_player *player, double delta_time);
