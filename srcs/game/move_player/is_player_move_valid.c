@@ -20,11 +20,11 @@ static bool	is_position_near_npc(t_game *game, t_dpoint next_pos)
 	int		i;
 
 	i = 0;
-	minimum_distance = 0.3;
+	minimum_distance = 0.5;
 	while (i < game->npc_count)
 	{
 		npc = game->npcs[i];
-		npc_distance = ft_cab_dist_dpoint(next_pos, npc->pos);
+		npc_distance = ft_euclidean_dist_dpoint(next_pos, npc->pos);
 		if (npc_distance < minimum_distance)
 			return (true);
 		i++;
@@ -44,7 +44,7 @@ static bool	is_position_near_item(t_game *game, t_dpoint next_pos)
 	while (i < game->item_count)
 	{
 		item = game->items[i];
-		item_distance = ft_cab_dist_dpoint(next_pos, item->pos);
+		item_distance = ft_euclidean_dist_dpoint(next_pos, item->pos);
 		if (item_distance < minimum_distance)
 			return (true);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:39:09 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 00:17:52 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 22:35:06 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	spawn_entity_at_position(t_game *game, char cell,
 {
 	if (cell == 'A')
 		spawn_armchair(game, x, y);
-	else if (cell == 'F')
-		spawn_floorlamp(game, x, y);
+	else if (cell == 'B')
+		spawn_armchair2(game, x, y);
 	else if (cell == 'T')
 		spawn_coffee_table(game, x, y);
 	else if (cell == 'C')
@@ -31,7 +31,7 @@ static void	spawn_entity_at_position(t_game *game, char cell,
 
 static int	get_entity_map_value(char cell)
 {
-	if (cell == 'A' || cell == 'F' || cell == 'T' || cell == 'C')
+	if (cell == 'A' || cell == 'T' || cell == 'C')
 		return (FURNITURE);
 	return (EMPTY);
 }

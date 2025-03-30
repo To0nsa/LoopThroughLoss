@@ -6,26 +6,20 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:25:33 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 00:18:38 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 20:42:44 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
 
-void	load_single_xpm(t_game *game, t_texture *tex, char *path, void *mlx)
+void	load_single_texture(t_game *game, t_texture *tex, const char *path)
 {
-	int	width;
-	int	height;
+	tex->texture = LoadTexture(path);
+	if (tex->texture.id == 0)
+		error(game, "LoadTexture() failed");
 
-	tex->ptr = mlx_xpm_file_to_image(mlx, path, &width, &height);
-	if (!tex->ptr)
-		error(game, "mlx_xpm_file_to_image() failed");
-	tex->size.x = width;
-	tex->size.y = height;
-	tex->addr = mlx_get_data_addr(tex->ptr, &tex->bpp, &tex->line_size,
-			&tex->endian);
-	if (!tex->addr)
-		error(game, "mlx_get_data_addr() failed");
+	tex->size.x = tex->texture.width;
+	tex->size.y = tex->texture.height;
 }
 
 void	load_sprite_animation(t_game *game, t_texture **frames,
@@ -34,17 +28,12 @@ void	load_sprite_animation(t_game *game, t_texture **frames,
 	int	i;
 
 	*frames = x_calloc(game, frame_count, sizeof(t_texture));
-	i = 0;
-	while (i < frame_count)
-	{
-		load_single_xpm(game, &((*frames)[i]), paths[i], game->mlx);
-		i++;
-	}
+	for (i = 0; i < frame_count; i++)
+		load_single_texture(game, &((*frames)[i]), paths[i]);
 }
 
 void	load_game_textures(t_game *game)
 {
-	load_single_xpm(game, &game->tex.walls, WTEST, game->mlx);
-	load_single_xpm(game, &game->tex.door, DTEST, game->mlx);
-	load_single_xpm(game, &game->tex.dialogue_box, DIALOGUE_BOX, game->mlx);
+	load_single_texture(game, &game->tex.walls, WTEST);
+	load_single_texture(game, &game->tex.door, DTEST);
 }

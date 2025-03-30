@@ -6,27 +6,11 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:08:10 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:37:18 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 22:58:25 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LoopThroughLoss.h"
-
-double	get_delta_time(void)
-{
-	struct timeval	tv;
-	double			current_time;
-	static double	last_time;
-	double			delta_time;
-
-	gettimeofday(&tv, NULL);
-	current_time = tv.tv_sec + tv.tv_usec / 1000000.0;
-	if (last_time == 0.0)
-		last_time = current_time;
-	delta_time = current_time - last_time;
-	last_time = current_time;
-	return (delta_time);
-}
 
 t_door	*find_door_at(t_game *game, t_point pos)
 {
@@ -41,27 +25,4 @@ t_door	*find_door_at(t_game *game, t_point pos)
 		i++;
 	}
 	return (NULL);
-}
-
-bool	is_within_bounds(t_game *game, t_point pos)
-{
-	return (pos.x >= 0 && pos.x < game->map->size.x
-		&& pos.y >= 0 && pos.y < game->map->size.y);
-}
-
-int	handle_game_state(t_game *game)
-{
-	if (game->state == GAME_OVER)
-	{
-		// draw_lose_message(game);
-		return (0);
-	}
-	else if (game->state == WIN)
-	{
-		// draw_win_message(game);
-		return (0);
-	}
-	else if (game->state != RUNNING)
-		return (0);
-	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 14:16:50 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 22:57:55 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define LOOPTHROUGHLOSS_H
 
 # include "libft.h"
+# include "raylib.h"
+# include "raymath.h"
 # include "assets_path.h"
 
-# include <mlx.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -70,8 +71,8 @@
 # define WIN_W		1200
 # define WIN_H		900
 
-# define TEX_W		128
-# define TEX_H		128
+# define TEX_W		1024
+# define TEX_H		1024
 
 # define DEAD_ZONE	1.0
 
@@ -88,42 +89,6 @@ typedef enum e_char_value
 	EMPTY
 }	t_char_value;
 
-typedef struct s_node
-{
-	t_point			pos;
-	int				g_cost;
-	int				h_cost;
-	int				f_cost;
-	struct s_node	*parent;
-	struct s_node	*next;
-}	t_node;
-
-typedef struct s_closed_list
-{
-	t_node	**nodes;
-	int		capacity;
-	int		size;
-}	t_closed_list;
-
-typedef struct s_astar
-{
-	t_point				goal;
-	t_closed_list		*closed_list;
-	int					**open_list;
-	t_node				*node;
-	t_node				*current_node;
-	t_point				direction[4];
-}	t_astar;
-
-typedef struct s_mouse_data
-{
-	t_point	position;
-	t_point	center;
-	double	delta_x;
-	double	rotation_speed;
-	double	sensitivity;
-}	t_mouse_data;
-
 typedef struct s_map
 {
 	int			fd;
@@ -136,23 +101,6 @@ typedef struct s_map
 	int			floor_color;
 	int			ceiling_color;
 }	t_map;
-
-typedef struct s_window
-{
-	void	*ptr;
-	char	*name;
-	t_point	size;
-	t_point	offset;
-}	t_window;
-
-typedef struct s_img
-{
-	void	*ptr;
-	char	*addr;
-	int		bpp;
-	int		line_size;
-	int		endian;
-}	t_img;
 
 typedef struct s_ray
 {
@@ -175,12 +123,8 @@ typedef struct s_ray
 
 typedef struct s_texture
 {
-	void	*ptr;
-	char	*addr;
-	t_point	size;
-	int		bpp;
-	int		line_size;
-	int		endian;
+	Texture2D	texture;
+	Vector2		size;
 }	t_texture;
 
 typedef struct s_sprite_draw
@@ -327,7 +271,6 @@ typedef struct s_tex
 {
 	t_texture	walls;
 	t_texture	door;
-	t_texture	dialogue_box;
 }	t_tex;
 
 typedef enum e_game_state
@@ -373,18 +316,12 @@ typedef struct s_game
 	t_game_state	state;
 	t_story			story;
 	t_map			*map;
-	void			*mlx;
-	t_window		*window;
 	t_player		player;
 	t_tex			tex;
-	t_img			img;
-	t_img			bg_img;
-	t_img			fade_img;
 	t_npc			**npcs;
 	int				npc_count;
 	t_door			**doors;
 	int				door_count;
-	t_dpoint		exit_pos;
 	t_item			**items;
 	int				item_count;
 	t_entity		*entities;
@@ -396,12 +333,14 @@ typedef struct s_game
 	bool			temp_msg_visible;
 	char			temp_msg[50];
 	double			temp_msg_timer;
-	double			fps;
+	double			temp_msg_timer_max;
 	int				frame_count;
 	double			fps_time_acc;
+	double			fps;
 }	t_game;
 
 void	spawn_armchair(t_game *game, double x, double y);
+void	spawn_armchair2(t_game *game, double x, double y);
 void	spawn_answering_machine(t_game *game, double x, double y);
 void	spawn_floorlamp(t_game *game, double x, double y);
 void	spawn_coffee_table(t_game *game, double x, double y);
@@ -410,6 +349,7 @@ void	spawn_mother(t_game *game, double x, double y);
 
 void	reset_player(t_game *game, t_player *player);
 
+void	update_interaction_block_timer(t_game *game, double delta_time);
 void	block_interactions_for_seconds(t_game *game, double seconds);
 
 void	start_fade_out(t_transition *transition);
@@ -417,6 +357,8 @@ void	start_fade_out(t_transition *transition);
 void	init_transition(t_game *game, t_transition *transition, double duration);
 void	update_transition(t_game *game, t_transition *transition, double delta_time);
 void	render_transition(t_game *game, t_transition *transition);
+
+void	draw_background(int ceiling_color, int floor_color);
 
 
 // UTILS
@@ -428,16 +370,10 @@ void	free_single_npc(t_game *game, t_npc *npc);
 void	free_npcs(t_game *game);
 void	free_single_item(t_game *game, t_item *item);
 void	free_items(t_game *game);
-void	load_single_xpm(t_game *game, t_texture *tex, char *path, void *mlx);
+void	load_single_texture(t_game *game, t_texture *tex, const char *path);
 void	load_game_textures(t_game *game);
-double	get_delta_time(void);
-void	draw_lose_message(t_game *game);
-void	check_win_condition(t_game *game);
-void	draw_win_message(t_game *game);
 bool	is_facing_target(t_player *player, t_dpoint target_pos);
 void	update_entities_sort(t_game *game);
-int		handle_game_state(t_game *game);
-void	init_background(t_game *game);
 
 // PARSING
 void	extract_file_content(t_game *game, t_map *map);
@@ -451,8 +387,7 @@ void	parse_map(t_game *game, t_map *map);
 
 // INITIALIZATION
 t_game	*init_game(char *filename);
-// void	load_sprite_frames_npc(t_game *game, t_sprite *sprite);
-void	update_all_npcs(t_game *game, double delta_time);
+void	init_player(t_game *game, t_player *player);
 
 // TEMP_MESSAGE
 void	update_temp_message(t_game *game, double delta_time);
@@ -465,8 +400,6 @@ void	draw_temp_message(t_game *game);
 
 // ITEM
 
-void	update_item_list(t_game *game, t_item *item);
-// void	update_items(t_game *game, double delta_time);
 
 // DOOR
 void	update_door_list(t_game *game, t_door *door);
@@ -478,25 +411,24 @@ void	calculate_texture_mapping(t_game *game, t_ray *ray);
 void	calculate_ray_properties(t_game *game, t_ray *ray);
 void	init_ray(t_game *game, t_ray *ray, int x);
 void	init_dda_ray(t_game *game, t_ray *ray);
-void	raycast(t_game *game, t_ray *ray, int *x, double *z_buffer);
+void	raycast(t_game *game, t_ray *ray, int x, double *z_buffer);
 void	perform_dda(t_game *game, t_ray *ray);
 void	render_scene(t_game *game, double delta_time);
-void	draw_pause_message(t_game *game);
+
 void	draw_npc_dialogue(t_game *game);
-void	init_player(t_game *game, t_player *player);
-// void	load_sprite_animation(t_game *game, t_texture **frames, char **paths, int frame_count);
-void	draw_texture(t_game *game, t_texture *texture, t_dpoint texture_pos, double *z_buffer);
 void	draw_entities(t_game *game, double *z_buffer);
-// void	draw_key(t_game *game, t_item *item, double *z_buffer);
+
 double	compute_determinant(t_player player);
 double	compute_inverse_determinant(double det);
 double	compute_transform_x(t_player player, t_dpoint rel, double inv_det);
 double	compute_transform_y(t_player player, t_dpoint rel, double inv_det);
 bool	is_sprite_in_front(double transform_y);
 bool	calc_sprite_screen_coords(t_sprite_draw *data);
-void	draw_sprite(t_game *game, t_player player, t_sprite *sprite, double *z_buffer);
+bool	init_sprite_draw_data(t_sprite_draw *data, t_player player, t_sprite *sprite);
 void	draw_sprite_column(t_game *game, t_sprite_draw *data, double *z_buffer);
 bool	init_sprite_draw_data(t_sprite_draw *data, t_player player, t_sprite *sprite);
+void	draw_sprite(t_game *game, t_player player, t_sprite *sprite, double *z_buffer);
+void	draw_texture(t_game *game, t_texture *texture, t_dpoint texture_pos, double *z_buffer);
 
 // HOOKS
 bool	interact_with_door(t_game *game);
@@ -506,11 +438,10 @@ bool	continue_npc_dialogue(t_game *game);
 void	update_story(t_game *game, double delta_time);
 void	handle_interaction(t_game *game);
 int		pause_game(t_game *game);
-void	handle_event_hooks(t_game *game, t_window *window);
+void	handle_events(t_game *game);
 
 // GAME LOOP
 int		game_loop(t_game *game);
-void	handle_mouse_movement(t_game *game, t_window *window);
 bool	is_map_position_valid_player(t_game *game, t_dpoint pos);
 bool	is_within_bounds(t_game *game, t_point pos);
 bool	is_player_move_valid(t_game *game, t_dpoint pos);
@@ -531,8 +462,6 @@ char	*x_strdup(t_game *game, const char *s);
 char	**x_copy_strarray(t_game *game, char **array);
 int		**x_create_matrix(t_game *game, int row_count, int col_count);
 char	*x_itoa(t_game *game, int n);
-
-t_dial_phase	get_story_phase(t_story *story);
 
 // MUSIC
 

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:40:31 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:30:58 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 22:55:49 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ void	free_single_item(t_game *game, t_item *item)
 		return ;
 	if (ft_strcmp(item->type, "static") == 0)
 		mlx_destroy_image(game->mlx, item->texture.ptr);
-	else if (ft_strcmp(item->type, "animated") == 0)
-		free_tex_frames
-			(game, item->sprite.idle_frames, item->sprite.idle_frames_count);
 	free(item);
 }
 

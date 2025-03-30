@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 00:07:19 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 21:58:37 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,46 +40,35 @@ static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 	return (&game->tex.walls);
 }
 
-static inline int	get_tex_color_no_alpha(t_texture *tex, int x, int y)
+void	draw_wall_column(t_game *game, t_ray *ray, int x)
 {
-	unsigned int	*pixel_ptr;
-	unsigned int	color;
+	t_texture	*tex = select_wall_texture(game, ray);
 
-	pixel_ptr
-		= (unsigned int *)(tex->addr + y
-			* tex->line_size + x * (tex->bpp >> 3));
-	color = *pixel_ptr;
-	return (color);
+	Rectangle src_rect = {
+		.x = ray->tex.x,
+		.y = 0,
+		.width = 1,
+		.height = tex->size.y
+	};
+
+	Rectangle dest_rect = {
+		.x = x,
+		.y = ray->draw_start,
+		.width = 1,
+		.height = ray->draw_end - ray->draw_start
+	};
+
+	Vector2 origin = {0, 0};
+
+	DrawTexturePro(tex->texture, src_rect, dest_rect, origin, 0, WHITE);
 }
 
-void	draw_wall_column(t_game *game, t_ray *ray, int *x)
+void	raycast(t_game *game, t_ray *ray, int x, double *z_buffer)
 {
-	t_texture	*tex;
-	int			y;
-	char		*dst;
-	int			color;
-
-	tex = select_wall_texture(game, ray);
-	y = ray->draw_start;
-	dst = game->img.addr + (y * game->img.line_size)
-		+ ((*x) * (game->img.bpp >> 3));
-	while (y <= ray->draw_end)
-	{
-		ray->tex.y = (int)ray->tex_pos & (tex->size.y - 1);
-		ray->tex_pos += ray->step;
-		color = get_tex_color_no_alpha(tex, ray->tex.x, ray->tex.y);
-		*(unsigned int *)dst = color;
-		dst += game->img.line_size;
-		y++;
-	}
-}
-
-void	raycast(t_game *game, t_ray *ray, int *x, double *z_buffer)
-{
-	init_ray(game, ray, *x);
+	init_ray(game, ray, x);
 	init_dda_ray(game, ray);
 	perform_dda(game, ray);
 	calculate_ray_properties(game, ray);
 	draw_wall_column(game, ray, x);
-	z_buffer[(*x)++] = ray->perp_w_dist;
+	z_buffer[x] = ray->perp_w_dist;
 }

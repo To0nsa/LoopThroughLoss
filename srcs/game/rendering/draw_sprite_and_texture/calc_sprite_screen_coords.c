@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:42:27 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 22:11:47 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,61 @@
 
 static int	get_sprite_screen_x(double transform_x, double transform_y)
 {
-	int	screen_center_x;
-
-	screen_center_x = WIN_W >> 1;
-	return ((int)(screen_center_x * (1 + transform_x / transform_y)));
+	return (int)((WIN_W / 2.0) * (1.0 + (transform_x / transform_y)));
 }
 
-static int	get_sprite_scaled_dimension(double transform_y)
+static int	get_sprite_scaled_size(double transform_y)
 {
-	int	scaled_height;
-
-	scaled_height = (int)fabs(WIN_H / transform_y);
-	return (fmax(scaled_height, 1));
+	int height = (int)fabs((double)WIN_H / transform_y);
+	return (height < 1) ? 1 : height;
 }
 
-static t_point	get_vertical_bounds(int height)
+static void	apply_vertical_offset(int *start_y, int *end_y, double vMove, double transform_y)
 {
-	t_point	vertical_bounds;
-
-	vertical_bounds.y = clamp((WIN_H + height) / 2, 0, WIN_H - 1);
-	vertical_bounds.x = clamp((WIN_H - height) / 2, 0, WIN_H - 1);
-	return (vertical_bounds);
+	int vMoveScreen = (int)(vMove / transform_y);
+	*start_y += vMoveScreen;
+	*end_y += vMoveScreen;
 }
 
-static t_point	get_horizontal_bounds(int screen_x, int width)
+static void	get_sprite_bounds(t_sprite_draw *data, int height)
 {
-	t_point	horizontal_bounds;
+	int start_y = -height / 2 + (WIN_H / 2);
+	int end_y = start_y + height;
 
-	horizontal_bounds.x = clamp(screen_x - width / 2, 0, WIN_W - 1);
-	horizontal_bounds.y = clamp(screen_x + width / 2, 0, WIN_W - 1);
-	return (horizontal_bounds);
+	apply_vertical_offset(&start_y, &end_y, 200.0, data->transform.y);
+
+	data->draw_start.y = start_y;
+	data->draw_end.y = end_y;
+	data->draw_start.x = data->screen_x - data->width / 2;
+	data->draw_end.x = data->screen_x + data->width / 2;
+}
+
+static void	clamp_sprite_bounds(t_sprite_draw *data)
+{
+	if (data->draw_start.x < 0)
+		data->draw_start.x = 0;
+	if (data->draw_end.x > WIN_W - 1)
+		data->draw_end.x = WIN_W - 1;
+	if (data->draw_start.y < 0)
+		data->draw_start.y = 0;
+	if (data->draw_end.y > WIN_H - 1)
+		data->draw_end.y = WIN_H - 1;
 }
 
 bool	calc_sprite_screen_coords(t_sprite_draw *data)
 {
-	t_point	vertical;
-	t_point	horizontal;
+	if (data->transform.y <= 0.0)
+		return false;
 
 	data->screen_x = get_sprite_screen_x(data->transform.x, data->transform.y);
-	data->width = get_sprite_scaled_dimension(data->transform.y);
-	data->height = data->width;
-	vertical = get_vertical_bounds(data->height);
-	horizontal = get_horizontal_bounds(data->screen_x, data->width);
-	data->draw_start.y = vertical.x;
-	data->draw_end.y = vertical.y;
-	data->draw_start.x = horizontal.x;
-	data->draw_end.x = horizontal.y;
-	return (data->draw_start.x < data->draw_end.x
-		&& data->draw_start.y < data->draw_end.y);
+	data->height = get_sprite_scaled_size(data->transform.y);
+	data->width = data->height;
+
+	get_sprite_bounds(data, data->height);
+	clamp_sprite_bounds(data);
+
+	if (data->draw_end.x < 0 || data->draw_start.x >= WIN_W)
+		return false;
+
+	return true;
 }

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 22:33:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 13:59:22 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 15:40:37 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	init_transition(t_game *game, t_transition *transition, double duration)
 {
-	game->fade_img.ptr = mlx_new_image(game->mlx, WIN_W, WIN_H);
-	game->fade_img.addr = mlx_get_data_addr(game->fade_img.ptr,
-											&game->fade_img.bpp,
-											&game->fade_img.line_size,
-											&game->fade_img.endian);
+	(void)game;
 	transition->duration = duration;
 	transition->fade_alpha = 0.0;
 	transition->timer = 0.0;
 	transition->state = FADE_IDLE;
+	transition->on = false;
 }
 
 void	start_fade_out(t_transition *transition)
@@ -69,47 +66,12 @@ void	update_transition(t_game *game, t_transition *transition, double delta_time
 		transition->fade_alpha = 1.0 - (transition->timer / transition->duration);
 }
 
-void	fill_transition_image(t_game *game, t_transition *transition)
+void	render_transition(t_game *game, t_transition *transition)
 {
-	int				x, y;
-	t_img			*fade_img = &game->fade_img;
-	t_img			*scene_img = &game->img;
-	unsigned int	*fade_ptr;
-	unsigned int	*scene_ptr;
-	unsigned char	r, g, b;
-	double			alpha = transition->fade_alpha;
-
-	if (!fade_img->addr || !scene_img->addr)
+	(void)game;
+	if (transition->state == FADE_IDLE && transition->fade_alpha <= 0.01)
 		return ;
 
-	for (y = 0; y < WIN_H; y++)
-	{
-		for (x = 0; x < WIN_W; x++)
-		{
-			int offset = y * fade_img->line_size + x * (fade_img->bpp / 8);
-
-			scene_ptr = (unsigned int *)(scene_img->addr + offset);
-			fade_ptr = (unsigned int *)(fade_img->addr + offset);
-
-			if (!scene_ptr || !fade_ptr)
-				continue;
-
-			unsigned int scene_color = *scene_ptr;
-
-			r = ((scene_color >> 16) & 0xFF) * (1.0 - alpha);
-			g = ((scene_color >> 8) & 0xFF) * (1.0 - alpha);
-			b = (scene_color & 0xFF) * (1.0 - alpha);
-
-			*fade_ptr = (r << 16) | (g << 8) | b;
-		}
-	}
-}
-
-void render_transition(t_game *game, t_transition *transition)
-{
-    if (transition->state == FADE_IDLE && transition->fade_alpha <= 0.01)
-        return;
-
-    fill_transition_image(game, transition);
-    mlx_put_image_to_window(game->mlx, game->window->ptr, game->fade_img.ptr, 0, 0);
+	Color fade_color = Fade(BLACK, transition->fade_alpha);
+	DrawRectangle(0, 0, WIN_W, WIN_H, fade_color);
 }
