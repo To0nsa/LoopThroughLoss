@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:28:44 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 23:48:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 13:56:38 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	handle_player_moves(t_game *game, double delta_time)
 	t_player	*player;
 
 	player = &game->player;
-	if (is_any_npc_talking(game) || is_answering_machine_on(game))
+	if (is_any_npc_talking(game)
+		|| is_answering_machine_on(game)
+		|| game->transition.on)
 		return ;
 	if (game->keys[UP])
 		move_player_forward(game, player, delta_time);

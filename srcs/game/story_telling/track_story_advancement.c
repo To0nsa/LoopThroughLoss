@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 23:46:55 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 14:21:46 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,31 @@ static t_dial_phase	get_mother_dial_phase(t_story *story)
 {
 	if (story->state == DENIAL_LOOP)
 	{
-		if (story->loop_number == FIRST_LOOP)
+		if (story->loop_number == FIRST_LOOP
+			&& !story->has_spoken_to_mother)
 			return (PHASE_0);
-		else
+		else if (story->loop_number == FIRST_LOOP
+			&& story->has_spoken_to_mother)
 			return (PHASE_1);
+		else if (story->loop_number == SECOND_LOOP)
+			return (PHASE_4);
 	}
 	else if (story->state == ANGER_LOOP)
 		return (PHASE_2);
 	return (PHASE_0);
+}
+
+static bool	update_timer(double *timer, double delta_time)
+{
+	if (*timer <= 0.0)
+		return (false);
+	*timer -= delta_time;
+	if (*timer <= 0.0)
+	{
+		*timer = 0.0;
+		return (true);
+	}
+	return (false);
 }
 
 void	update_story(t_game *game, double delta_time)
@@ -61,7 +78,7 @@ void	update_story(t_game *game, double delta_time)
 	{
 		if (story->loop_number == FIRST_LOOP
 			&& story->has_spoken_to_mother
-			&& story->has_interacted_with_door)
+			&& update_timer(&story->door_interaction_timer, delta_time))
 		{
 			story->loop_number = SECOND_LOOP;
 			mother->state = BLURRY;
@@ -70,7 +87,7 @@ void	update_story(t_game *game, double delta_time)
 		}
 		else if (story->loop_number == SECOND_LOOP
 			&& story->has_spoken_to_mother
-			&& story->has_interacted_with_door)
+			&& update_timer(&story->door_interaction_timer, delta_time))
 		{
 			story->loop_number = THIRD_LOOP;
 			mother->state = NOT_PRESENT;

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 22:33:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 00:51:43 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 13:59:22 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ void	start_fade_out(t_transition *transition)
 {
 	transition->state = FADE_OUT;
 	transition->timer = 0.0;
+	transition->on = true;
 }
 
 void	start_fade_in(t_transition *transition)
 {
 	transition->state = FADE_IN;
 	transition->timer = 0.0;
+	transition->on = true;
 }
 
 void	update_transition(t_game *game, t_transition *transition, double delta_time)
@@ -51,10 +53,14 @@ void	update_transition(t_game *game, t_transition *transition, double delta_time
 		{
 			reset_player(game, &game->player);
 			game->story.has_interacted_with_door = false;
+			game->story.has_spoken_to_mother = false;
 			start_fade_in(transition);
 		}
 		else
+		{
 			transition->state = FADE_IDLE;
+			transition->on = false;
+		}
 	}
 
 	if (transition->state == FADE_OUT)

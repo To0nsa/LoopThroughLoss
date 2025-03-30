@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 00:16:59 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 14:16:50 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ typedef struct s_story
 	bool	has_spoken_to_mother;
 	bool	has_interacted_with_door;
 	double	reset_timer;
+	double	door_interaction_timer;
 } t_story;
 
 typedef struct s_dial

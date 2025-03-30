@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 21:09:07 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/30 14:23:04 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	init_mother_dialogues(t_game *game, t_npc *npc)
 			"I wish I could take back all the pain, but it's not that simple.",
 			"I'm sorry I couldn't be there the way you needed me to be.", NULL }, 		// anger loop PHASE_2
 		{"Are you feeling better now?", NULL }, 										// bargaining loop PHASE_3
-		{"Your mother is speaking to you, but you are not able to understand…", NULL},	// depression loop PHASE_4
+		{"Your mother is speaking to you...",
+			"but you are not able to understand...", NULL},								// depression loop PHASE_4
 		{NULL}
 		};
 		
