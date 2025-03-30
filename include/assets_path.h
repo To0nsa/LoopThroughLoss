@@ -7,7 +7,7 @@
 # define DTEST "./assets/textures/door/door.xpm"
 
 # define MOTHER "./assets/textures/npc/mother.xpm"
-# define MOTHER_BLURRY "./assets/textures/npc/mother_blurry.xpm"
+# define MOTHER_BLURRY "./assets/textures/npc/mother_blur.xpm"
 
 # define ITEM_AM			"assets/textures/items/answering_machine.xpm"
 # define ITEM_CHAIR_UP		"./assets/textures/items/chair.xpm"
