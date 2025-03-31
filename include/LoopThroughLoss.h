@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 09:21:49 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 14:13:34 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define FLOOR_COLOR_AL			0x851414FF
 # define CEILING_COLOR_AL		0x615454FF
 
-# define FLOOR_COLOR_BL			0x7BC9C0FF
+# define FLOOR_COLOR_BL			0xFFFFFFFF
 # define CEILING_COLOR_BL		0xFFFFFFFF
 
 # define FLOOR_COLOR_DEPL		0x7BC9C0FF
@@ -164,7 +164,9 @@ typedef enum e_pending_transition
 	TRANSITION_NONE,
 	TRANSITION_FIRST_TO_SECOND_LOOP,
 	TRANSITION_SECOND_TO_THIRD_LOOP,
-	TRANSITION_THIRD_TO_FOURTH_LOOP
+	TRANSITION_RESET_SECOND_LOOP,
+	TRANSITION_THIRD_TO_ANGER_LOOP,
+	TRANSITION_SECOND_TO_BARGAINING_LOOP
 }	t_pending_transition;
 
 typedef struct s_story
@@ -174,7 +176,7 @@ typedef struct s_story
 	bool	has_spoken_to_mother;
 	bool	has_interacted_with_door;
 	double	reset_timer;
-	double	door_interaction_timer;
+	double	interaction_timer;
 	bool	to_anger_loop;
 	t_pending_transition	pending_transition;
 } t_story;
@@ -245,9 +247,13 @@ typedef struct s_item
 	char			*name;
 	t_dpoint		pos;
 	t_texture		texture;
+	t_texture		texture_broken;
+	t_texture		texture_message;
 	t_sprite		sprite;
 	t_item_state	state;
 	bool			is_interactable;
+	bool			is_broken;
+	bool			has_message;
 }	t_item;
 
 typedef enum e_entity_type
@@ -341,7 +347,7 @@ typedef struct s_game
 	double			interaction_block_timer;
 	t_transition	transition;
 	bool			temp_msg_visible;
-	char			temp_msg[50];
+	char			temp_msg[80];
 	double			temp_msg_timer;
 	double			temp_msg_timer_max;
 	t_font			font;

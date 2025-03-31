@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interact_with_door.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 11:25:17 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/03/31 12:56:35 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,34 @@ bool	interact_with_door(t_game *game)
 	{
 		if (story->state == DENIAL_LOOP)
 		{
-			show_temp_message(game, 3.0, "Maybe your mother is on the other side of that door?");
-			story->door_interaction_timer = 3.0;
+			show_temp_message(game, 3.0, "Maybe your mother is on the other side of that door ?");
+			story->has_interacted_with_door = true;
+			story->interaction_timer = 3.0;
 		}
 		else if (story->state == ANGER_LOOP)
 		{
 			show_temp_message(game, 3.0, "They will pay for this...");
-			story->door_interaction_timer = 3.0;
+			story->has_interacted_with_door = true;
+			story->interaction_timer = 3.0;
 		}
 		else if (story->state == BARGAINING_LOOP)
 		{
 			show_temp_message(game, 3.0, "There must be something more you could have done.");
-			story->door_interaction_timer = 3.0;
+			story->has_interacted_with_door = true;
+			story->interaction_timer = 3.0;
 		}
 		else if (story->state == DEPRESSION_LOOP)
 		{
 			show_temp_message(game, 3.0, "What's the point?");
-			story->door_interaction_timer = 3.0;
+			story->has_interacted_with_door = true;
+			story->interaction_timer = 3.0;
 		}
 		else if (story->state == ACCEPTANCE_LOOP)
 		{
 			show_temp_message(game, 3.0, "She's dead but not gone.");
+			story->has_interacted_with_door = true;
 			show_temp_message(game, 3.0, "You carry her, and the mark she made on the world, with you.");
-			story->door_interaction_timer = 3.0;
+			story->interaction_timer = 3.0;
 		}
 	}
 	return (true);

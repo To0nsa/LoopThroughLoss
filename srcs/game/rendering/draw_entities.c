@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:34:03 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 06:46:26 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 12:16:21 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,24 @@ static void	draw_npc(t_game *game, t_npc *npc, double *z_buffer)
 
 static void	draw_item(t_game *game, t_item *item, double *z_buffer)
 {
-	draw_texture(game, &item->texture, item->pos, z_buffer);
+	if (ft_strcmp(item->name, "answering_machine") == 0)
+	{
+		if (item->is_broken)
+			draw_texture(game, &item->texture_broken, item->pos, z_buffer);
+		else if (item->has_message)
+			draw_texture(game, &item->texture_message, item->pos, z_buffer);
+		else
+			draw_texture(game, &item->texture, item->pos, z_buffer);
+	}
+	else if (ft_strcmp(item->name, "chair") == 0)
+	{
+		if (item->is_broken)
+			draw_texture(game, &item->texture_broken, item->pos, z_buffer);
+		else
+			draw_texture(game, &item->texture, item->pos, z_buffer);
+	}
+	else
+		draw_texture(game, &item->texture, item->pos, z_buffer);
 }
 
 void	draw_entities(t_game *game, double *z_buffer)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spawn_mother.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 11:26:19 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/03/31 11:55:45 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	init_mother_dialogues(t_game *game, t_npc *npc)
 		{"Good morning, dear.",										// denial loop, first iteration PHASE_0
 			"I'm still at the hospital. You can call me.", 
 			"...", NULL },
-		{"I will come through that door, don't worry..."
-		"...any moment now.", NULL },								// denial loop, other iterations PHASE_1
+		{"I will come through that door, don't worry...",
+			"...any moment now.", NULL },								// denial loop, other iterations PHASE_1
 		{"...",
 			"You should have taken me to the doctor earlier.",
 			"Those damn doctors didn't know what they were doing!", NULL }, 		// anger loop PHASE_2
