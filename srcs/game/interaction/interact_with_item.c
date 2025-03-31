@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:02:23 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:48:22 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,27 @@ static t_item	*find_closest_item(t_game *game, double range)
 	return (closest_item);
 }
 
-void update_voice_timer(t_game *game, double delta_time)
+void	update_voice_timer(t_game *game, double delta_time)
 {
 	if (!game->music.voice_active)
 		return;
 
 	if (game->story.state == DENIAL_LOOP)
 		UpdateMusicStream(game->music.voice_message_one);
-	if (game->story.state == ANGER_LOOP
-		|| game->story.state == BARGAINING_LOOP)
-		UpdateMusicStream(game->music.voice_message_one);
-	game->music.voice_timer -= delta_time;
+	else if (game->story.state == ANGER_LOOP || game->story.state == BARGAINING_LOOP)
+		UpdateMusicStream(game->music.voice_message_two);
 
-	if (game->music.voice_timer <= 0.0f)
+	game->music.voice_timer -= delta_time;
+	if (game->music.voice_timer <= 0.0)
 	{
-		StopMusicStream(game->music.voice_message_one);
+		if (game->story.state == DENIAL_LOOP)
+		{
+			StopMusicStream(game->music.voice_message_one);
+			game->story.to_anger_loop = true;
+		}
+		else if (game->story.state == ANGER_LOOP || game->story.state == BARGAINING_LOOP)
+			StopMusicStream(game->music.voice_message_two);
 		game->music.voice_active = false;
-		game->story.to_anger_loop = true;
 	}
 }
 
@@ -80,13 +84,13 @@ bool	interact_with_item(t_game *game)
 			&& story->loop_number == THIRD_LOOP
 			&& ft_strcmp(item->name, "answering_machine") == 0)
 		{
-			show_temp_message(game, 44.0, "You are listening to the answering machine...");
+			show_temp_message(game, 4.0, "You are listening to the answering machine...");
 			PlayMusicStream(game->music.voice_message_one);
 			SetMusicVolume(game->music.voice_message_one, 0.8f);
-			game->music.voice_timer = 44.0;
+			game->music.voice_timer = 4.0;
 			game->music.voice_active = true;
-			block_interactions_for_seconds(game, 44.0);
-			story->reset_timer = 44.0;
+			block_interactions_for_seconds(game, 4.0);
+			story->reset_timer = 4.0;
 		}
 		if (story->state == ANGER_LOOP)
 		{
@@ -139,8 +143,8 @@ bool	interact_with_item(t_game *game)
 					item->is_broken = false;
 				}
 			}
-			if (story->loop_number == FIRST_LOOP
-				&&	story->loop_number == SECOND_LOOP
+			if ((story->loop_number == FIRST_LOOP
+				||	story->loop_number == SECOND_LOOP)
 				&& (ft_strcmp(item->name, "answering_machine") == 0))
 			{
 				show_temp_message(game, 12.0, "You are listening to the answering machine...");

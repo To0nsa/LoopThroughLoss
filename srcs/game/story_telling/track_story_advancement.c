@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:43:21 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:52:37 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ static t_dial_phase	get_mother_dial_phase(t_story *story)
 	}
 	else if (story->state == ANGER_LOOP)
 		return (PHASE_2);
+	else if (story->state == BARGAINING_LOOP)
+		return (PHASE_3);
+	else if (story->state == DEPRESSION_LOOP)
+		return (PHASE_4);
 	return (PHASE_0);
 }
 
