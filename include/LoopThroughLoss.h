@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 15:52:31 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:40:38 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ typedef enum e_pending_transition
 	TRANSITION_SECOND_TO_THIRD_LOOP,
 	TRANSITION_RESET_SECOND_LOOP,
 	TRANSITION_THIRD_TO_ANGER_LOOP,
-	TRANSITION_SECOND_TO_BARGAINING_LOOP
+	TRANSITION_SECOND_TO_BARGAINING_LOOP,
+	TRANSITION_SECOND_LOOP_TO_DEPRESSION
 }	t_pending_transition;
 
 typedef struct s_story
@@ -175,6 +176,7 @@ typedef struct s_story
 	int		loop_number;
 	bool	has_spoken_to_mother;
 	bool	has_interacted_with_door;
+	bool	has_interacted_with_frame;
 	double	reset_timer;
 	double	interaction_timer;
 	bool	to_anger_loop;
@@ -223,7 +225,8 @@ typedef enum e_door_state
 
 typedef enum e_door_type
 {
-	DOOR_T
+	DOOR_T,
+	FRAME_T
 }	t_door_type;
 
 typedef struct s_door
@@ -232,6 +235,7 @@ typedef struct s_door
 	t_dpoint		pos;
 	t_door_state	state;
 	double			offset;
+	bool			is_broken;
 }	t_door;
 
 typedef enum e_item_state

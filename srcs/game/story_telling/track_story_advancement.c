@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 14:22:29 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:43:21 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static bool	update_timer(double *timer, double delta_time)
 
 void	update_story(t_game *game, double delta_time)
 {
-	t_story	*story = &game->story;
-	t_transition *transition = &game->transition;
-	t_npc	*mother = NULL;
-	t_item	*answering_machine = NULL;
-	t_item	*chair = NULL;
+	t_story			*story = &game->story;
+	t_transition	*transition = &game->transition;
+	t_npc			*mother = NULL;
+	t_item			*answering_machine = NULL;
+	t_item			*chair = NULL;
 
 	update_npc_references(game, &mother);
 	update_item_references(game, &answering_machine, &chair);
@@ -255,6 +255,71 @@ void	update_story(t_game *game, double delta_time)
 		story->pending_transition = TRANSITION_NONE;
 	}
 
+	if (story->state == BARGAINING_LOOP)
+	{	
+		if (story->loop_number == FIRST_LOOP
+			&& story->has_interacted_with_frame
+			&& story->has_interacted_with_door
+			&& !chair->is_broken
+			&& update_timer(&story->interaction_timer, delta_time))
+		{
+			story->pending_transition = TRANSITION_FIRST_TO_SECOND_LOOP;
+			start_fade_out(transition);
+			block_interactions_for_seconds(game, transition->duration);
+		}
+		else if (story->loop_number == SECOND_LOOP)
+		{
+			if (story->has_interacted_with_door
+				&& story->has_spoken_to_mother
+				&& update_timer(&story->interaction_timer, delta_time))
+			{
+				story->pending_transition = TRANSITION_SECOND_LOOP_TO_DEPRESSION;
+				start_fade_out(transition);
+				block_interactions_for_seconds(game, transition->duration);
+			}
+		}
+	}
+
+	if (transition->state == FADE_IN
+		&& story->state == BARGAINING_LOOP)
+	{
+		switch (story->pending_transition)
+		{
+			case TRANSITION_FIRST_TO_SECOND_LOOP:
+				story->loop_number = SECOND_LOOP;
+				reset_player(game, &game->player);
+				story->has_spoken_to_mother = false;
+				story->has_interacted_with_door = false;
+				if (chair)
+					chair->is_broken = false;
+				if (answering_machine)
+				{
+					answering_machine->is_broken = false;
+					answering_machine->has_message = true;
+				}
+				if (mother)
+					mother->state = IDLE;
+				break ;
+
+			case TRANSITION_SECOND_LOOP_TO_DEPRESSION:
+				story->loop_number = FIRST_LOOP;
+				story->state = DEPRESSION_LOOP;
+				reset_player(game, &game->player);
+				story->has_interacted_with_door = false;
+				if (answering_machine)
+				{
+					answering_machine->is_broken = false;
+					answering_machine->has_message = false;
+				}
+				if (mother)
+					mother->state = NOT_PRESENT;
+				break ;
+
+			default:
+				break ;
+		}
+		story->pending_transition = TRANSITION_NONE;
+	}
 
 	if (mother)
 		mother->dialogue.phase = get_mother_dial_phase(&game->story);

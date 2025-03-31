@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:00:27 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:30:41 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	interact_with_door(t_game *game)
 	door = find_closest_door(game, 1.3);
 	if (!door)
 		return (false);
-	if (door->state == CLOSED)
+	if (door->state == CLOSED && door->type == DOOR_T)
 	{
 		if (story->state == DENIAL_LOOP)
 		{
@@ -77,6 +77,14 @@ bool	interact_with_door(t_game *game)
 			show_temp_message(game, 3.0, "You carry her, and the mark she made on the world, with you.");
 			story->interaction_timer = 3.0;
 		}
+	}
+	if (door->state == CLOSED && door->type == FRAME_T
+		&& story->state == BARGAINING_LOOP)
+	{
+			show_temp_message(game, 3.0, "Your repaired the frame...");
+			story->has_interacted_with_frame = true;
+			story->interaction_timer = 3.0;
+			door->is_broken = false;
 	}
 	return (true);
 }
