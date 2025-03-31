@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 15:54:50 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 16:01:56 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_item *find_item_by_name(t_game *game, const char *name)
 bool	interact_with_item(t_game *game)
 {
 	t_story *story	= &game->story;
-	t_item	*item	= find_closest_item(game, 0.8);
+	t_item	*item	= find_closest_item(game, 1.1);
 	
 	if (!item)
 		return (false);
@@ -129,9 +129,11 @@ bool	interact_with_item(t_game *game)
 			if (story->loop_number == FIRST_LOOP)
 			{
 				if ((ft_strcmp(item->name, "chair") == 0))
+				{
 					show_temp_message(game, 3.0, "You put back the chair up...");
 					story->interaction_timer = 3.0;
 					item->is_broken = false;
+				}
 			}
 			if (story->loop_number == SECOND_LOOP
 			&& ft_strcmp(item->name, "answering_machine") == 0)
