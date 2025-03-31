@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 14:13:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 15:52:31 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define FLOOR_COLOR_AL			0x851414FF
 # define CEILING_COLOR_AL		0x615454FF
 
-# define FLOOR_COLOR_BL			0xFFFFFFFF
-# define CEILING_COLOR_BL		0xFFFFFFFF
+# define FLOOR_COLOR_BL			0x758C69FF
+# define CEILING_COLOR_BL		0x939990FF
 
 # define FLOOR_COLOR_DEPL		0x7BC9C0FF
 # define CEILING_COLOR_DEPL		0xFFFFFFFF

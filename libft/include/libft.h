@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 01:23:16 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 11:19:06 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/03/31 15:48:33 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@
 
 # define ATOI_ERROR 9223372036854775807LL
 
-//# define M_PI		3.14159265358979323846
+#ifndef M_PI
+ #define M_PI		3.14159265358979323846
+#endif
 
 typedef struct s_point
 {
