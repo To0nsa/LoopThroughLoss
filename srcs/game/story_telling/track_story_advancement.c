@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 06:46:42 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 09:33:21 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,31 @@ static bool	update_timer(double *timer, double delta_time)
 void	update_story(t_game *game, double delta_time)
 {
 	t_story	*story = &game->story;
+	t_transition *transition = &game->transition;
 	t_npc	*mother = NULL;
 	t_item	*answering_machine = NULL;
 
 	update_npc_references(game, &mother);
 	update_item_references(game, &answering_machine);
+	
 	if (story->state == DENIAL_LOOP)
 	{
 		if (story->loop_number == FIRST_LOOP
 			&& story->has_spoken_to_mother
 			&& update_timer(&story->door_interaction_timer, delta_time))
 		{
-			story->loop_number = SECOND_LOOP;
-			mother->is_blurry = true;
-			start_fade_out(&game->transition);
-			block_interactions_for_seconds(game, game->transition.duration);
+			story->pending_transition = TRANSITION_FIRST_TO_SECOND_LOOP;
+			start_fade_out(transition);
+			block_interactions_for_seconds(game, transition->duration);
 		}
 		else if (story->loop_number == SECOND_LOOP
 			&& story->has_spoken_to_mother
 			&& update_timer(&story->door_interaction_timer, delta_time))
 		{
-			story->loop_number = THIRD_LOOP;
-			mother->state = NOT_PRESENT;
-			answering_machine->is_interactable = true;
-			start_fade_out(&game->transition);
-			block_interactions_for_seconds(game, game->transition.duration);
-		} 
+			story->pending_transition = TRANSITION_SECOND_TO_THIRD_LOOP;
+			start_fade_out(transition);
+			block_interactions_for_seconds(game, transition->duration);
+		}
 		else if (story->loop_number == THIRD_LOOP)
 		{
 			if (story->reset_timer > 0)
@@ -102,11 +101,51 @@ void	update_story(t_game *game, double delta_time)
 				story->reset_timer -= delta_time;
 				if (story->reset_timer <= 0)
 				{
-					start_fade_out(&game->transition);
-					block_interactions_for_seconds(game, game->transition.duration);
+					story->pending_transition = TRANSITION_THIRD_TO_FOURTH_LOOP;
+					start_fade_out(transition);
+					block_interactions_for_seconds(game, transition->duration);
 				}
 			}
 		}
 	}
-	mother->dialogue.phase = get_mother_dial_phase(&game->story);
+
+	if (transition->state == FADE_IN
+		&& story == DENIAL_LOOP)
+	{
+		switch (story->pending_transition)
+		{
+			case TRANSITION_FIRST_TO_SECOND_LOOP:
+				story->loop_number = SECOND_LOOP;
+				reset_player(game, &game->player);
+				story->has_spoken_to_mother = false;
+				story->has_interacted_with_door = false;
+				if (mother)
+					mother->is_blurry = true;
+				break;
+
+			case TRANSITION_SECOND_TO_THIRD_LOOP:
+				story->loop_number = THIRD_LOOP;
+				reset_player(game, &game->player);
+				story->has_spoken_to_mother = false;
+				story->has_interacted_with_door = false;
+				if (mother)
+					mother->state = NOT_PRESENT;
+				if (answering_machine)
+					answering_machine->is_interactable = true;
+				break;
+
+			case TRANSITION_THIRD_TO_FOURTH_LOOP:
+				story->state = ANGER_LOOP;
+				story->has_spoken_to_mother = false;
+				story->has_interacted_with_door = false;
+				reset_player(game, &game->player);
+				break;
+
+			default:
+				break;
+		}
+		story->pending_transition = TRANSITION_NONE;
+	}
+	if (mother)
+		mother->dialogue.phase = get_mother_dial_phase(&game->story);
 }

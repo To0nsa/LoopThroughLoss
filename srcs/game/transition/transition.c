@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 22:33:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 15:40:37 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 09:31:37 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,18 @@ void	start_fade_in(t_transition *transition)
 
 void	update_transition(t_game *game, t_transition *transition, double delta_time)
 {
+	(void)game;
 	if (transition->state == FADE_IDLE)
 		return;
 
 	transition->timer += delta_time;
+
 	if (transition->timer >= transition->duration)
 	{
 		transition->timer = transition->duration;
 
 		if (transition->state == FADE_OUT)
-		{
-			reset_player(game, &game->player);
-			game->story.has_interacted_with_door = false;
-			game->story.has_spoken_to_mother = false;
 			start_fade_in(transition);
-		}
 		else
 		{
 			transition->state = FADE_IDLE;

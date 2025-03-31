@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 08:16:31 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 09:21:49 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define FLOOR_COLOR_DL			0x7BC9C0FF
 # define CEILING_COLOR_DL		0xFFFFFFFF
 
-# define FLOOR_COLOR_AL			0x7BC9C0FF
-# define CEILING_COLOR_AL		0xFFFFFFFF
+# define FLOOR_COLOR_AL			0x851414FF
+# define CEILING_COLOR_AL		0x615454FF
 
 # define FLOOR_COLOR_BL			0x7BC9C0FF
 # define CEILING_COLOR_BL		0xFFFFFFFF
@@ -159,6 +159,14 @@ typedef enum e_dial_phase
 # define THIRD_LOOP		2
 # define FOURTH_LOOP	3
 
+typedef enum e_pending_transition
+{
+	TRANSITION_NONE,
+	TRANSITION_FIRST_TO_SECOND_LOOP,
+	TRANSITION_SECOND_TO_THIRD_LOOP,
+	TRANSITION_THIRD_TO_FOURTH_LOOP
+}	t_pending_transition;
+
 typedef struct s_story
 {
 	int		state;
@@ -167,6 +175,8 @@ typedef struct s_story
 	bool	has_interacted_with_door;
 	double	reset_timer;
 	double	door_interaction_timer;
+	bool	to_anger_loop;
+	t_pending_transition	pending_transition;
 } t_story;
 
 typedef struct s_dial
@@ -290,11 +300,12 @@ typedef enum e_fade_state
 
 typedef struct s_transition
 {
-	bool			on;
-	double			timer;
-	double			duration;
-	double			fade_alpha; // 0.0 (transparent) to 1.0 (fully black)
-	t_fade_state	state;
+	bool					on;
+	double					timer;
+	double					duration;
+	double					fade_alpha; // 0.0 (transparent) to 1.0 (fully black)
+	t_fade_state			state;
+	bool					midpoint_triggered;
 }	t_transition;
 
 typedef struct s_font

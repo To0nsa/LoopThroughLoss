@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 08:17:59 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 09:36:08 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void update_voice_timer(t_game *game, double delta_time)
 	if (game->music.voice_timer <= 0.0f)
 	{
 		StopMusicStream(game->music.voice_message_one);
-		UnloadMusicStream(game->music.voice_message_one);
 		game->music.voice_active = false;
+		game->story.to_anger_loop = true;
 	}
 }
 
@@ -65,9 +65,9 @@ bool	interact_with_item(t_game *game)
 			&& story->loop_number == THIRD_LOOP
 			&& ft_strcmp(item->name, "answering_machine") == 0)
 		{
-			item->state = ON;
 			show_temp_message(game, 44.0, "You are listening to the answering machine...");
 			PlayMusicStream(game->music.voice_message_one);
+			SetMusicVolume(game->music.voice_message_one, 0.7f);
 			game->music.voice_timer = 44.0;
 			game->music.voice_active = true;
 			block_interactions_for_seconds(game, 44.0);
