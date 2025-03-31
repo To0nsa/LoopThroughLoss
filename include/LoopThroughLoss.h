@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 07:45:38 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 07:54:17 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <stdint.h>
 # include <string.h>
 
-# define FLOOR_COLOR_DL		0xF5DFA4
-# define CEILING_COLOR_DL	0xFFFFFF
+# define FLOOR_COLOR_DL		0x7BC9C0FF
+# define CEILING_COLOR_DL	0xFFFFFFFF
 
 # define SUCCESS	0
 # define FAILURE	1
