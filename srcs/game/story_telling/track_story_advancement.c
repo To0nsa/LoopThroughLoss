@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 10:02:47 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 10:06:29 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,7 @@ void	update_story(t_game *game, double delta_time)
 	{
 		switch (story->pending_transition)
 		{
-			printf("here");
 			case TRANSITION_FIRST_TO_SECOND_LOOP:
-				printf("here");
 				story->loop_number = SECOND_LOOP;
 				reset_player(game, &game->player);
 				story->has_spoken_to_mother = false;
