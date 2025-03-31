@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 06:36:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 09:53:37 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	init_mother_dialogues(t_game *game, t_npc *npc)
 {
 	static char	*mother_dialogues[][6] = {
 		{"Oh, you're up early today. That's nice.",										// denial loop, first iteration PHASE_0
-			"Why that face? Did you have a bad dream?", 
+			"Why that face? Did you have a bad dream?",
 			"...", NULL },
 		{"It's such a peaceful morning, isn't it?", NULL },								// denial loop, other iterations PHASE_1
 		{"...",
@@ -80,7 +80,6 @@ void	spawn_mother(t_game *game, double x, double y)
 	npc->type = "mother";
 	npc->pos = (t_dpoint){pos.x + 0.5, pos.y + 0.5};
 
-	// Chargement des textures avec Raylib
 	load_single_texture(game, &npc->texture_idle, MOTHER);
 	load_single_texture(game, &npc->texture_blurry, MOTHER_BLURRY);
 
