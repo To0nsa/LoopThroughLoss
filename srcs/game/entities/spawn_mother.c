@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 23:02:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:36:34 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	allocate_dialogues(t_game *game, t_dial *dialog, char *dialogues[][6
 	int	j;
 
 	dialog->dialogues = x_malloc(game, phase_count * sizeof(char **));
-	dialog->dialogue_count = x_malloc(game, phase_count * sizeof(int));
+	dialog->count = x_malloc(game, phase_count * sizeof(int));
 	while (i < phase_count)
 	{
 		count = 0;
@@ -37,7 +37,7 @@ static void	allocate_dialogues(t_game *game, t_dial *dialog, char *dialogues[][6
 		dialog->dialogues[i] = x_malloc(game, (count + 1) * sizeof(char *));
 		if (!dialog->dialogues[i])
 			return ;
-		dialog->dialogue_count[i] = count;
+		dialog->count[i] = count;
 		j = 0;
 		while (j < count)
 		{

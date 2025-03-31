@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:09:21 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 23:56:00 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:38:38 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	advance_npc_dialogue(t_npc *npc, t_story *story)
 		return (false);
 	npc->dialogue.current_line++;
 	if (npc->dialogue.current_line
-		>= npc->dialogue.dialogue_count[npc->dialogue.phase])
+		>= npc->dialogue.count[npc->dialogue.phase])
 	{
 		npc->dialogue.current_line = 0;
 		npc->state = IDLE;

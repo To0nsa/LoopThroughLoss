@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 14:21:46 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:46:42 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	update_story(t_game *game, double delta_time)
 			&& update_timer(&story->door_interaction_timer, delta_time))
 		{
 			story->loop_number = SECOND_LOOP;
-			mother->state = BLURRY;
+			mother->is_blurry = true;
 			start_fade_out(&game->transition);
 			block_interactions_for_seconds(game, game->transition.duration);
 		}

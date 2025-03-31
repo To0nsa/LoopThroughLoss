@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:05 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 20:43:29 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 07:25:10 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ t_game	*init_game(char *filename)
 	parse_map(game, game->map);
 	load_game_textures(game);
 	init_player(game, &game->player);
-	init_transition(game, &game->transition, 6.0);
+	init_transition(game, &game->transition, 4.0);
 	game->state = RUNNING;
 	game->story.state = DENIAL_LOOP;
 	game->story.loop_number = FIRST_LOOP;
+	game->font.dialogue = LoadFont(M_FONT);
+	game->font.interaction = LoadFont(I_FONT);
 	return (game);
 }

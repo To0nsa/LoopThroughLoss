@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 23:06:20 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 07:27:45 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,17 +190,20 @@ typedef struct s_story
 typedef struct s_dial
 {
 	char			***dialogues;
-	int				*dialogue_count;
+	int				*count;
 	int				current_line;
 	int 			phase_count;
 	t_dial_phase	phase;
+	float			alpha;
+	bool			fading_in;
+	bool			fading_out;
+	float			fade_speed;
 }	t_dial;
 
 typedef enum e_npc_state
 {
 	IDLE,
 	SPEAK,
-	BLURRY,
 	NOT_PRESENT
 }	e_npc_state;
 
@@ -213,6 +216,7 @@ typedef struct s_npc
 	t_texture	texture_idle;
 	t_texture	texture_blurry;
 	t_dial		dialogue;
+	bool		is_blurry;
 }	t_npc;
 
 typedef enum e_door_state
@@ -311,6 +315,12 @@ typedef struct s_transition
 	t_fade_state	state;
 }	t_transition;
 
+typedef struct s_font
+{
+	Font	dialogue;
+	Font	interaction;
+} t_font;
+
 typedef struct s_game
 {
 	t_game_state	state;
@@ -334,9 +344,7 @@ typedef struct s_game
 	char			temp_msg[50];
 	double			temp_msg_timer;
 	double			temp_msg_timer_max;
-	int				frame_count;
-	double			fps_time_acc;
-	double			fps;
+	t_font			font;
 }	t_game;
 
 void	spawn_armchair(t_game *game, double x, double y);
@@ -358,7 +366,9 @@ void	init_transition(t_game *game, t_transition *transition, double duration);
 void	update_transition(t_game *game, t_transition *transition, double delta_time);
 void	render_transition(t_game *game, t_transition *transition);
 
-void	draw_background(int ceiling_color, int floor_color);
+void	draw_background(t_game *game);
+
+void	update_npc_dialogue_alpha(t_npc *npc, float delta_time);
 
 
 // UTILS

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:30:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 15:31:21 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:36:34 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	free_dialogues(t_dial *dialog)
 		i++;
 	}
 	free(dialog->dialogues);
-	free(dialog->dialogue_count);
+	free(dialog->count);
 }
 
 void	free_single_npc(t_game *game, t_npc *npc)

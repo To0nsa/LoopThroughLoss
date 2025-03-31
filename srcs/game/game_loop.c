@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:33:37 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 22:57:14 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 07:27:28 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	game_loop(t_game *game)
 	BeginDrawing();
 	ClearBackground(BLACK);
 	handle_events(game);
-	draw_background(CEILING_COLOR_DL, FLOOR_COLOR_DL);
+	draw_background(game);
 	render_scene(game, delta_time);
 
 	EndDrawing();

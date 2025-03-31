@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:34:03 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 22:29:18 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:46:26 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	draw_mother(t_game *game, t_npc *npc, double *z_buffer)
 
 	if (npc->state == NOT_PRESENT)
 		return ;
-	if (npc->state == BLURRY)
+	if (npc->is_blurry)
 		setup_temp_sprite(&temp, npc, &npc->texture_blurry);
 	else
 		setup_temp_sprite(&temp, npc, &npc->texture_idle);

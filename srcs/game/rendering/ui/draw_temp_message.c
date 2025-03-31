@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:35:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 15:11:46 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 06:20:27 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	draw_temp_message(t_game *game)
 	if (!game->temp_msg_visible)
 		return;
 
-	int x = (WIN_W >> 1) - 160;
+	int x = (WIN_W >> 1) - 300;
 	int y = WIN_H - (WIN_H / 5);
-	int w = 320;
+	int w = 600;
 	int h = 80;
 
 	float fade_duration = 0.3f;
@@ -65,6 +65,6 @@ void	draw_temp_message(t_game *game)
 	DrawRectangleRounded((Rectangle){x, y, w, h}, 0.2f, 16, box_color);
 
 	// Texte
-	DrawText(game->temp_msg, x + 20, y + 30, 20, text_color);
+	DrawTextEx(game->font.interaction, game->temp_msg, (Vector2){x + 20, y + 30}, 24, 1.0f, text_color);
 }
 

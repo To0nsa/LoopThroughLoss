@@ -1,6 +1,9 @@
 #ifndef ASSETS_PATH_H
 # define ASSETS_PATH_H
 
+# define M_FONT "./assets/font/Delius-Regular.ttf"
+# define I_FONT "./assets/font/FunnelSans-VariableFont_wght.ttf"
+
 # define WTEST "./assets/textures/walls/wallTexture.png"
 # define DTEST "./assets/textures/door/door.png"
 
