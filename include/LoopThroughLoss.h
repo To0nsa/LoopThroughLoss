@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 07:54:17 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 08:16:31 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,43 +29,28 @@
 # include <stdint.h>
 # include <string.h>
 
-# define FLOOR_COLOR_DL		0x7BC9C0FF
-# define CEILING_COLOR_DL	0xFFFFFFFF
+# define FLOOR_COLOR_DL			0x7BC9C0FF
+# define CEILING_COLOR_DL		0xFFFFFFFF
+
+# define FLOOR_COLOR_AL			0x7BC9C0FF
+# define CEILING_COLOR_AL		0xFFFFFFFF
+
+# define FLOOR_COLOR_BL			0x7BC9C0FF
+# define CEILING_COLOR_BL		0xFFFFFFFF
+
+# define FLOOR_COLOR_DEPL		0x7BC9C0FF
+# define CEILING_COLOR_DEPL		0xFFFFFFFF
+
+# define FLOOR_COLOR_ACCL		0x7BC9C0FF
+# define CEILING_COLOR_ACCL		0xFFFFFFFF
 
 # define SUCCESS	0
 # define FAILURE	1
-
-# define KEYPRESS			2
-# define KEYRELEASE			3
-# define FOCUS_IN			9
-# define FOCUS_OUT			10
-# define MINIMIZED			12
-# define DESTROY_NOTIFY		17
-# define CONFIGURE_NOTIFY	22
-
-# define KEYPRESS_MASK			1
-# define KEYRELEASE_MASK		2
-# define FOCUS_CHANGE_MASK		2097152
-# define STRUCTURE_NOTIFY_MASK	131072
 
 # define FOV				0.66
 // fov_threshold = cos(FOV / 2.0);
 # define FOV_THRESHOLD		0.943956
 # define INFINITY_DIST		1e6
-
-# define UP				122
-# define DOWN			115
-# define LEFT			113
-# define RIGHT			100
-/* # define UP				119
-# define DOWN			115
-# define LEFT			100
-# define RIGHT			97 */
-# define ARR_RIGHT		65361
-# define ARR_LEFT		65363
-# define PAUSE			32
-# define ESC			65307
-# define INTERACTION	101
 
 # define WIN_NAME	"Cube3D"
 # define WIN_W		1200
@@ -75,9 +60,6 @@
 # define TEX_H		1024
 
 # define DEAD_ZONE	1.0
-
-# define MAX_LINE_LENGTH	40
-# define MAX_LINES			4
 
 typedef enum e_char_value
 {
@@ -321,6 +303,13 @@ typedef struct s_font
 	Font	interaction;
 } t_font;
 
+typedef struct s_music
+{
+	Music	voice_message_one;
+	double	voice_timer;
+	bool	voice_active;
+} t_music;
+
 typedef struct s_game
 {
 	t_game_state	state;
@@ -345,6 +334,7 @@ typedef struct s_game
 	double			temp_msg_timer;
 	double			temp_msg_timer_max;
 	t_font			font;
+	t_music			music;
 }	t_game;
 
 void	spawn_armchair(t_game *game, double x, double y);
@@ -368,7 +358,7 @@ void	render_transition(t_game *game, t_transition *transition);
 
 void	draw_background(t_game *game);
 
-void	update_npc_dialogue_alpha(t_npc *npc, float delta_time);
+void	update_voice_timer(t_game *game, double delta_time);
 
 
 // UTILS

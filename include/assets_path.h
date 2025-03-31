@@ -4,6 +4,8 @@
 # define M_FONT "./assets/font/Delius-Regular.ttf"
 # define I_FONT "./assets/font/FunnelSans-VariableFont_wght.ttf"
 
+# define VOICE_MESSAGE1 "./assets/voiceMessage/voiceMessageAnnouncement.wav"
+
 # define WTEST "./assets/textures/walls/wallTexture.png"
 # define DTEST "./assets/textures/door/door.png"
 

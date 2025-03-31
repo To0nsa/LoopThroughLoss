@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:05 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 07:25:10 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 08:11:17 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_game	*init_game(char *filename)
 	game->story.loop_number = FIRST_LOOP;
 	game->font.dialogue = LoadFont(M_FONT);
 	game->font.interaction = LoadFont(I_FONT);
+	game->music.voice_message_one = LoadMusicStream(VOICE_MESSAGE1);
+	
 	return (game);
 }
