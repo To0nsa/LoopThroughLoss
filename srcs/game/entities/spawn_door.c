@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:46:10 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:03:52 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 20:48:54 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	spawn_door(t_game *game, double x, double y)
 	t_door		*door;
 
 	door = x_calloc(game, 1, sizeof(t_door));
+	door->name = "door";
 	door->pos = (t_dpoint){x, y};
 	door->type = DOOR_T;
 	door->state = CLOSED;
@@ -37,6 +38,7 @@ void	spawn_frame(t_game *game, double x, double y)
 	t_door		*door;
 
 	door = x_calloc(game, 1, sizeof(t_door));
+	door->name = "frame";
 	door->pos = (t_dpoint){x, y};
 	door->type = FRAME_T;
 	door->state = CLOSED;

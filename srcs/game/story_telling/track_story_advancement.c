@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:52:37 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 21:01:51 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,10 @@ void	update_story(t_game *game, double delta_time)
 					answering_machine->has_message = false;
 				}
 				if (chair)
+				{
 					chair->is_interactable = true;
+					chair->is_broken = false;
+				}
 				reset_player(game, &game->player);
 				break;
 
@@ -316,7 +319,10 @@ void	update_story(t_game *game, double delta_time)
 					answering_machine->has_message = false;
 				}
 				if (mother)
-					mother->state = NOT_PRESENT;
+				{
+					mother->state = IDLE;
+					mother->is_blurry = true;
+				}
 				break ;
 
 			default:

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:30:41 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 21:07:06 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,9 @@ bool	interact_with_door(t_game *game)
 	if (door->state == CLOSED && door->type == FRAME_T
 		&& story->state == BARGAINING_LOOP)
 	{
-			show_temp_message(game, 3.0, "Your repaired the frame...");
+			show_temp_message(game, 3.0, "You try to repair the frame… maybe it’s not too late.");
 			story->has_interacted_with_frame = true;
 			story->interaction_timer = 3.0;
-			door->is_broken = false;
 	}
 	return (true);
 }

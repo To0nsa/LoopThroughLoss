@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:39:09 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:06:39 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 18:55:07 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static void	spawn_entity_at_position(t_game *game, char cell,
 		spawn_chair(game, x, y);
 	else if (cell == 'M')
 		spawn_mother(game, x, y);
+	else if (cell == 'P')
+		spawn_plant(game, x, y);
+		
 }
 
 static int	get_entity_map_value(char cell)

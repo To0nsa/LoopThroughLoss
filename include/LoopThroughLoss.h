@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:21:55 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 21:06:34 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,10 +232,10 @@ typedef enum e_door_type
 typedef struct s_door
 {
 	t_door_type		type;
+	char			*name;
 	t_dpoint		pos;
 	t_door_state	state;
 	double			offset;
-	bool			is_broken;
 }	t_door;
 
 typedef enum e_item_state
@@ -275,10 +275,26 @@ typedef struct s_entity
 
 typedef struct s_tex
 {
-	t_texture	walls;
-	t_texture	door;
-	t_texture	frame;
-	t_texture	frame_broken;
+	t_texture walls_denial;
+	t_texture door_denial;
+	t_texture frame_denial;
+
+	t_texture walls_angry;
+	t_texture door_angry;
+	t_texture frame_angry;
+
+	t_texture walls_acceptance;
+	t_texture door_acceptance;
+	t_texture frame_acceptance;
+
+	t_texture walls_bargaining;
+	t_texture door_bargaining;
+	t_texture frame_bargaining;
+	t_texture frame_bargaining_repaired;
+	
+	t_texture walls_sad;
+	t_texture door_sad;
+	t_texture frame_sad;
 }	t_tex;
 
 typedef enum e_game_state
@@ -367,6 +383,7 @@ void	spawn_answering_machine(t_game *game, double x, double y);
 void	spawn_coffee_table(t_game *game, double x, double y);
 void	spawn_chair(t_game *game, double x, double y);
 void	spawn_mother(t_game *game, double x, double y);
+void	spawn_plant(t_game *game, double x, double y);
 
 void	spawn_frame(t_game *game, double x, double y);
 

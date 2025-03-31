@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:48:22 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 20:35:32 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_item *find_item_by_name(t_game *game, const char *name)
 bool	interact_with_item(t_game *game)
 {
 	t_story *story	= &game->story;
-	t_item	*item	= find_closest_item(game, 1.1);
+	t_item	*item	= find_closest_item(game, 1.0);
 	
 	if (!item)
 		return (false);
@@ -94,41 +94,43 @@ bool	interact_with_item(t_game *game)
 		}
 		if (story->state == ANGER_LOOP)
 		{
-			if (story->loop_number == FIRST_LOOP
-				&& (ft_strcmp(item->name, "answering_machine") == 0))
-			{
-				show_temp_message(game, 3.0, "You hit the answering with rage it's broken...");
-				story->interaction_timer = 3.0;
-				item->is_broken = true;
-			}
-			if ((story->loop_number == FIRST_LOOP
-				|| story->loop_number == SECOND_LOOP)
-				&& (ft_strcmp(item->name, "chair") == 0))
+			if (ft_strcmp(item->name, "chair") == 0)
 			{
 				show_temp_message(game, 3.0, "You kicked the chair, it hurts, it makes you angrier...");
 				story->interaction_timer = 3.0;
 				item->is_broken = true;
 			}
-			if (story->loop_number == SECOND_LOOP
-			&& ft_strcmp(item->name, "answering_machine") == 0)
+			if (story->loop_number == FIRST_LOOP)
 			{
-				t_item *chair = find_item_by_name(game, "chair");
-				
-				if (chair && chair->is_broken)
+				if (ft_strcmp(item->name, "answering_machine") == 0)
 				{
 					show_temp_message(game, 3.0, "You hit the answering with rage it's broken...");
 					story->interaction_timer = 3.0;
 					item->is_broken = true;
 				}
-				else
+			}
+			if (story->loop_number == SECOND_LOOP)
+			{
+				if (ft_strcmp(item->name, "answering_machine") == 0)
 				{
-					show_temp_message(game, 12.0, "You are listening to the answering machine...");
-					PlayMusicStream(game->music.voice_message_two);
-					SetMusicVolume(game->music.voice_message_two, 0.8f);
-					game->music.voice_timer = 12.0;
-					story->reset_timer = 12.0;
-					game->music.voice_active = true;
-					block_interactions_for_seconds(game, 12.0);
+					t_item *chair = find_item_by_name(game, "chair");
+					
+					if (chair && chair->is_broken)
+					{
+						show_temp_message(game, 3.0, "You hit the answering with rage it's broken...");
+						story->interaction_timer = 3.0;
+						item->is_broken = true;
+					}
+					else
+					{
+						show_temp_message(game, 12.0, "You are listening to the answering machine...");
+						PlayMusicStream(game->music.voice_message_two);
+						SetMusicVolume(game->music.voice_message_two, 0.8f);
+						game->music.voice_timer = 12.0;
+						story->reset_timer = 12.0;
+						game->music.voice_active = true;
+						block_interactions_for_seconds(game, 12.0);
+					}
 				}
 			}
 		}

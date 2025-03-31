@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 17:41:27 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 21:07:24 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,62 @@
 
 static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 {
+	t_story *story = &game->story;
 	t_door	*door;
 
 	if (ray->hit == 2)
 	{
 		door = find_door_at(game, ray->map);
-		if (door && door->type == DOOR_T)
-			return (&game->tex.door);
-		if (door && door->type == FRAME_T && door->is_broken)
-			return (&game->tex.frame_broken);
-		if (door && door->type == FRAME_T)
-			return (&game->tex.frame);
+		if (door)
+		{
+			if (strcmp(door->name, "door") == 0)
+			{
+				if (story->state == DENIAL_LOOP)
+					return &game->tex.door_denial;
+				else if (story->state == ANGER_LOOP)
+					return &game->tex.door_angry;
+				else if (story->state == BARGAINING_LOOP)
+					return &game->tex.door_bargaining;
+				else if (story->state == DEPRESSION_LOOP)
+					return &game->tex.door_sad;
+				else if (story->state == ACCEPTANCE_LOOP)
+					return &game->tex.door_acceptance;
+			}
+			else if (strcmp(door->name, "frame") == 0)
+			{
+				if (story->state == DENIAL_LOOP)
+					return &game->tex.frame_denial;
+				else if (story->state == ANGER_LOOP)
+					return &game->tex.frame_angry;
+				else if (story->state == BARGAINING_LOOP)
+					return &game->tex.frame_bargaining;
+				else if (story->state == DEPRESSION_LOOP)
+					return &game->tex.frame_sad;
+				else if (story->state == ACCEPTANCE_LOOP)
+					return &game->tex.frame_acceptance;
+				else if (story->state == BARGAINING_LOOP)
+					return &game->tex.frame_bargaining;
+				else if (story->state == BARGAINING_LOOP && story->has_interacted_with_frame)
+					return &game->tex.frame_bargaining_repaired;
+			}
+		}
 	}
-	if (ray->side == 0)
+
+	if (ray->side == 0 || ray->side == 1)
 	{
-		if (ray->dir.x > 0)
-			return (&game->tex.walls);
-		else
-			return (&game->tex.walls);
+		if (story->state == DENIAL_LOOP)
+			return &game->tex.walls_denial;
+		else if (story->state == ANGER_LOOP)
+			return &game->tex.walls_angry;
+		else if (story->state == BARGAINING_LOOP)
+			return &game->tex.walls_bargaining;
+		else if (story->state == DEPRESSION_LOOP)
+			return &game->tex.walls_sad;
+		else if (story->state == ACCEPTANCE_LOOP)
+			return &game->tex.walls_acceptance;
 	}
-	else
-	{
-		if (ray->dir.y > 0)
-			return (&game->tex.walls);
-		else
-			return (&game->tex.walls);
-	}
-	(void)ray;
-	return (&game->tex.walls);
+
+	return &game->tex.walls_denial;
 }
 
 void	draw_wall_column(t_game *game, t_ray *ray, int x)

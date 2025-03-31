@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:00:12 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 12:14:44 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 20:35:09 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,15 @@ void	spawn_chair(t_game *game, double x, double y)
 	item->pos = (t_dpoint){x + 0.5, y + 0.5};
 	load_single_texture(game, &item->texture, ITEM_CHAIR_UP);
 	load_single_texture(game, &item->texture_broken, ITEM_CHAIR_DOWN);
+	update_item_list(game, item);
+}
+
+void	spawn_plant(t_game *game, double x, double y)
+{
+	t_item *item = x_calloc(game, 1, sizeof(t_item));
+	item->type = "static";
+	item->name = "plant";
+	item->pos = (t_dpoint){x + 0.5, y + 0.5};
+	load_single_texture(game, &item->texture, PLANT);
 	update_item_list(game, item);
 }
