@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:48:46 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:48:18 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:02:23 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ void update_voice_timer(t_game *game, double delta_time)
 	if (!game->music.voice_active)
 		return;
 
-	UpdateMusicStream(game->music.voice_message_one);
+	if (game->story.state == DENIAL_LOOP)
+		UpdateMusicStream(game->music.voice_message_one);
+	if (game->story.state == ANGER_LOOP
+		|| game->story.state == BARGAINING_LOOP)
+		UpdateMusicStream(game->music.voice_message_one);
 	game->music.voice_timer -= delta_time;
 
 	if (game->music.voice_timer <= 0.0f)
@@ -78,7 +82,7 @@ bool	interact_with_item(t_game *game)
 		{
 			show_temp_message(game, 44.0, "You are listening to the answering machine...");
 			PlayMusicStream(game->music.voice_message_one);
-			SetMusicVolume(game->music.voice_message_one, 0.7f);
+			SetMusicVolume(game->music.voice_message_one, 0.8f);
 			game->music.voice_timer = 44.0;
 			game->music.voice_active = true;
 			block_interactions_for_seconds(game, 44.0);
@@ -114,13 +118,13 @@ bool	interact_with_item(t_game *game)
 				}
 				else
 				{
-					show_temp_message(game, 44.0, "You are listening to the answering machine...");
-					PlayMusicStream(game->music.voice_message_one);
-					SetMusicVolume(game->music.voice_message_one, 0.7f);
-					game->music.voice_timer = 44.0;
-					story->reset_timer = 44.0;
+					show_temp_message(game, 12.0, "You are listening to the answering machine...");
+					PlayMusicStream(game->music.voice_message_two);
+					SetMusicVolume(game->music.voice_message_two, 0.8f);
+					game->music.voice_timer = 12.0;
+					story->reset_timer = 12.0;
 					game->music.voice_active = true;
-					block_interactions_for_seconds(game, 44.0);
+					block_interactions_for_seconds(game, 12.0);
 				}
 			}
 		}
@@ -139,13 +143,13 @@ bool	interact_with_item(t_game *game)
 				&&	story->loop_number == SECOND_LOOP
 				&& (ft_strcmp(item->name, "answering_machine") == 0))
 			{
-				show_temp_message(game, 44.0, "You are listening to the answering machine...");
-				PlayMusicStream(game->music.voice_message_one);
-				SetMusicVolume(game->music.voice_message_one, 0.7f);
-				game->music.voice_timer = 44.0;
-				story->reset_timer = 44.0;
+				show_temp_message(game, 12.0, "You are listening to the answering machine...");
+				PlayMusicStream(game->music.voice_message_two);
+				SetMusicVolume(game->music.voice_message_two, 0.8f);
+				game->music.voice_timer = 12.0;
+				story->reset_timer = 12.0;
 				game->music.voice_active = true;
-				block_interactions_for_seconds(game, 44.0);
+				block_interactions_for_seconds(game, 12.0);
 			}
 		}
 		return (true);

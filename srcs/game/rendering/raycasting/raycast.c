@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 21:58:37 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:14:04 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 		door = find_door_at(game, ray->map);
 		if (door && door->type == DOOR_T)
 			return (&game->tex.door);
+		if (door && door->type == FRAME_T)
+			return (&game->tex.frame);
+		if (door && door->type == FRAME_T && door->is_broken)
+			return (&game->tex.frame_broken);	
 	}
 	if (ray->side == 0)
 	{

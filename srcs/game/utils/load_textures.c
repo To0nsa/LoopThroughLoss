@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:25:33 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 20:42:44 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:21:16 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	load_sprite_animation(t_game *game, t_texture **frames,
 
 void	load_game_textures(t_game *game)
 {
-	load_single_texture(game, &game->tex.walls, WTEST);
-	load_single_texture(game, &game->tex.door, DTEST);
+	load_single_texture(game, &game->tex.walls, WALL_IMG);
+	load_single_texture(game, &game->tex.door, DOOR_IMG);
+	load_single_texture(game, &game->tex.frame, FRAME_IMG);
+	load_single_texture(game, &game->tex.frame_broken, FRAME_BROKEN_IMG);
 }

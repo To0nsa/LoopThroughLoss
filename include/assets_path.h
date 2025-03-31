@@ -5,9 +5,12 @@
 # define I_FONT "./assets/font/FunnelSans-VariableFont_wght.ttf"
 
 # define VOICE_MESSAGE1 "./assets/voiceMessage/voiceMessageAnnouncement.wav"
+# define VOICE_MESSAGE2 "./assets/voiceMessage/voiceMessageMother.wav"
 
-# define WTEST "./assets/textures/walls/wallTexture.png"
-# define DTEST "./assets/textures/door/door.png"
+# define WALL_IMG "./assets/textures/walls/wallTexture.png"
+# define DOOR_IMG "./assets/textures/walls/door.png"
+# define FRAME_IMG "./assets/textures/walls/frame.png"
+# define FRAME_BROKEN_IMG "./assets/textures/walls/frame_broken.png"
 
 # define MOTHER "./assets/textures/npc/mother.png"
 # define MOTHER_BLURRY "./assets/textures/npc/mother_blur.png"

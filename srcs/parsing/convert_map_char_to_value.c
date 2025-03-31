@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 01:39:09 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 22:35:06 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 17:06:39 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int	convert_map_char_to_value(t_game *game, t_map *map, int i, int j)
 	else if (cell == 'D')
 	{
 		spawn_door(game, (double)j, (double)i);
+		return (DOOR);
+	}
+	else if (cell == 'O')
+	{
+		spawn_frame(game, (double)j, (double)i);
 		return (DOOR);
 	}
 	else
