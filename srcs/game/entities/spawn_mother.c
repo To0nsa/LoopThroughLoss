@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spawn_mother.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 09:53:37 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 11:26:19 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,22 @@ static void	allocate_dialogues(t_game *game, t_dial *dialog, char *dialogues[][6
 	}
 }
 
+
 void	init_mother_dialogues(t_game *game, t_npc *npc)
 {
 	static char	*mother_dialogues[][6] = {
-		{"Oh, you're up early today. That's nice.",										// denial loop, first iteration PHASE_0
-			"Why that face? Did you have a bad dream?",
+		{"Good morning, dear.",										// denial loop, first iteration PHASE_0
+			"I'm still at the hospital. You can call me.", 
 			"...", NULL },
-		{"It's such a peaceful morning, isn't it?", NULL },								// denial loop, other iterations PHASE_1
+		{"I will come through that door, don't worry..."
+		"...any moment now.", NULL },								// denial loop, other iterations PHASE_1
 		{"...",
-			"I hear how upset you are… and you have every right to be.",
-			"I wish I could take back all the pain, but it's not that simple.",
-			"I'm sorry I couldn't be there the way you needed me to be.", NULL }, 		// anger loop PHASE_2
-		{"Are you feeling better now?", NULL }, 										// bargaining loop PHASE_3
-		{"Your mother is speaking to you...",
-			"but you are not able to understand...", NULL},								// depression loop PHASE_4
+			"You should have taken me to the doctor earlier.",
+			"Those damn doctors didn't know what they were doing!", NULL }, 		// anger loop PHASE_2
+		{"If you'd visited me more often, you would have noticed...",
+		"...a sign that something was wrong.", NULL }, 										// bargaining loop PHASE_3
+		{"What is your life going to look like...",
+			"...without me in it?", NULL},								// depression loop PHASE_4
 		{NULL}
 		};
 		

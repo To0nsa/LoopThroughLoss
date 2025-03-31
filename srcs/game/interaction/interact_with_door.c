@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interact_with_door.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 14:15:24 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/03/31 11:25:17 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ bool	interact_with_door(t_game *game)
 	{
 		if (story->state == DENIAL_LOOP)
 		{
-			show_temp_message(game, 3.0, "Why leave, you are good here...");
+			show_temp_message(game, 3.0, "Maybe your mother is on the other side of that door?");
 			story->door_interaction_timer = 3.0;
 		}
 		else if (story->state == ANGER_LOOP)
 		{
-			show_temp_message(game, 3.0, "How are you feeling today?");
+			show_temp_message(game, 3.0, "They will pay for this...");
 			story->door_interaction_timer = 3.0;
 		}
 		else if (story->state == BARGAINING_LOOP)
 		{
-			show_temp_message(game, 3.0, "Are you feeling better now?");
+			show_temp_message(game, 3.0, "There must be something more you could have done.");
 			story->door_interaction_timer = 3.0;
 		}
 		else if (story->state == DEPRESSION_LOOP)
@@ -68,7 +68,9 @@ bool	interact_with_door(t_game *game)
 		}
 		else if (story->state == ACCEPTANCE_LOOP)
 		{
-			// endgame(game);
+			show_temp_message(game, 3.0, "She's dead but not gone.");
+			show_temp_message(game, 3.0, "You carry her, and the mark she made on the world, with you.");
+			story->door_interaction_timer = 3.0;
 		}
 	}
 	return (true);
