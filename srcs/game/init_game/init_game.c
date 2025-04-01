@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:05 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 15:02:53 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:42:43 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ t_game	*init_game(char *filename)
 	game->music.depression.music = LoadMusicStream(MUSIC_DEPRESSION);
 	game->music.depression.volume = 0.0f;
 	game->music.depression.is_playing = false;
+
+	game->instruction = false;
 	return (game);
 }

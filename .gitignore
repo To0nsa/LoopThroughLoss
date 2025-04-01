@@ -1,0 +1,18 @@
+# Executable
+LoopThroughLoss
+
+# Build artifacts
+objs/
+*.o
+*.d
+
+# Built libraries
+raylib/src/libraylib.a
+libft/lib/libft.a
+
+# Editor and OS files
+*.swp
+*~
+.vscode/
+.idea/
+.DS_Store

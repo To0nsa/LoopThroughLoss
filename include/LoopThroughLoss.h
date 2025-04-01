@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 15:00:52 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:42:24 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,6 +391,7 @@ typedef struct s_game
 	double			temp_msg_timer;
 	double			temp_msg_timer_max;
 	t_font			font;
+	bool 			instruction;
 	t_music			music;
 }	t_game;
 

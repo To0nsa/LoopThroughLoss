@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:08:04 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 15:52:18 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:43:05 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	update_story(t_game *game, double delta_time)
 	update_npc_references(game, &mother);
 	update_item_references(game, &answering_machine, &chair);
 	
+	if (!game->instruction)
+	{
+		show_temp_message(game, 3.0, "Press 'E' to interact with elements of the game");
+		game->instruction = true;
+	}
 	if (story->state == DENIAL_LOOP)
 	{
 		if (story->loop_number == FIRST_LOOP
