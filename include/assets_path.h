@@ -30,8 +30,8 @@
 
 # define FRAME_BROKEN_IMG "./assets/textures/walls/frame_broken.png"
 
-# define MOTHER "./assets/textures/npc/mother.png"
-# define MOTHER_BLURRY "./assets/textures/npc/mother_blur.png"
+# define MOTHER			"./assets/textures/npc/mother.png"
+# define MOTHER_BLURRY	"./assets/textures/npc/mother_blur.png"
 
 # define ITEM_CHAIR_UP		"./assets/textures/items/chair.png"
 # define ITEM_CHAIR_DOWN	"./assets/textures/items/chair2.png"
@@ -45,5 +45,15 @@
 # define FURNITURE_CM	"./assets/textures/items/console_message.png"
 
 # define PLANT "./assets/textures/walls/plant.png"
+
+# define MUSIC_DENIAL		"./assets/music/denial_loop.wav"
+# define MUSIC_ACCEPTANCE	"./assets/music/acceptance_loop.wav"
+# define MUSIC_BARGAINING	"./assets/music/bargaining_loop.wav"
+# define MUSIC_ANGRY		"./assets/music/angry_loop.wav"
+# define MUSIC_DEPRESSION	"./assets/music/depression_loop.wav"
+
+# define SE_BROKEN_CHAIR	"./assets/soundEffect/breaking_chair.wav"
+# define SE_BROKEN_CONSOLE	"./assets/soundEffect/breaking_console.wav"
+
 
 #endif

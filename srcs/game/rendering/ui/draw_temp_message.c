@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:35:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 11:57:41 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 12:41:01 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ void	draw_temp_message(t_game *game)
 	float fade_duration = 0.3f;
 	float alpha = 1.0f;
 
-	// Calcul alpha pour fade-in / fade-out
 	if (game->temp_msg_timer < fade_duration)
 		alpha = game->temp_msg_timer / fade_duration;
 	else if (game->temp_msg_timer > game->temp_msg_timer_max - fade_duration)
 		alpha = (game->temp_msg_timer_max - game->temp_msg_timer) / fade_duration;
 
-	alpha = Clamp(alpha, 0.0f, 1.0f); // sécurité
+	alpha = Clamp(alpha, 0.0f, 1.0f);
 
-	Color box_color = Fade(DARKGRAY, 0.6f * alpha);
+	Color softCream = (Color){ 239, 222, 205, 255 };
+	Color box_color = Fade(softCream, 0.6f * alpha);
 	Color border_color = Fade(GRAY, alpha);
-	Color text_color = Fade(WHITE, alpha);
+	Color text_color = Fade(BLACK, alpha);
 
 	// Bordure simulée
 	DrawRectangleRounded((Rectangle){x - 2, y - 2, w + 4, h + 4}, 0.2f, 16, border_color);

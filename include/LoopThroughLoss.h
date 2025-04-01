@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 21:06:34 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:00:52 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 # define FLOOR_COLOR_BL			0x758C69FF
 # define CEILING_COLOR_BL		0x939990FF
 
-# define FLOOR_COLOR_DEPL		0x7BC9C0FF
+# define FLOOR_COLOR_DEPL		0x6E7F80FF
 # define CEILING_COLOR_DEPL		0xFFFFFFFF
 
-# define FLOOR_COLOR_ACCL		0x7BC9C0FF
+# define FLOOR_COLOR_ACCL		0xA3D1CBFF
 # define CEILING_COLOR_ACCL		0xFFFFFFFF
 
 # define SUCCESS	0
@@ -167,20 +167,25 @@ typedef enum e_pending_transition
 	TRANSITION_RESET_SECOND_LOOP,
 	TRANSITION_THIRD_TO_ANGER_LOOP,
 	TRANSITION_SECOND_TO_BARGAINING_LOOP,
-	TRANSITION_SECOND_LOOP_TO_DEPRESSION
+	TRANSITION_SECOND_LOOP_TO_DEPRESSION,
+	TRANSITION_RESET_FIRST_LOOP,
+	TRANSITION_FIRST_TO_ACCEPTANCE_LOOP
 }	t_pending_transition;
 
 typedef struct s_story
 {
-	int		state;
-	int		loop_number;
-	bool	has_spoken_to_mother;
-	bool	has_interacted_with_door;
-	bool	has_interacted_with_frame;
-	double	reset_timer;
-	double	interaction_timer;
-	bool	to_anger_loop;
+	int						state;
+	int						loop_number;
+	bool					has_spoken_to_mother;
+	bool					has_interacted_with_door;
+	bool					has_repaired_frame;
+	double					reset_timer;
+	double					interaction_timer;
+	bool					to_anger_loop;
+	t_dpoint				last_player_pos;
+	bool					is_player_idle;
 	t_pending_transition	pending_transition;
+	float					cover_progress;
 } t_story;
 
 typedef struct s_dial
@@ -342,12 +347,24 @@ typedef struct s_font
 	Font	interaction;
 } t_font;
 
+typedef struct s_track
+{
+	Music	music;
+	float	volume;
+	bool	is_playing;
+}	t_track;
+
 typedef struct s_music
 {
-	Music	voice_message_one;
-	Music	voice_message_two;
+	t_track	voice_message_one;
+	t_track	voice_message_two;
 	double	voice_timer;
 	bool	voice_active;
+	t_track	denial;
+	t_track	acceptance;
+	t_track	bargaining;
+	t_track	anger;
+	t_track	depression;
 } t_music;
 
 typedef struct s_game
@@ -401,6 +418,8 @@ void	render_transition(t_game *game, t_transition *transition);
 void	draw_background(t_game *game);
 
 void	update_voice_timer(t_game *game, double delta_time);
+
+void	update_music(t_game *game, double delta_time);
 
 
 // UTILS

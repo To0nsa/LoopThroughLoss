@@ -6,7 +6,7 @@
 #    By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 18:23:28 by nlouis            #+#    #+#              #
-#    Updated: 2025/03/31 19:37:52 by nlouis           ###   ########.fr        #
+#    Updated: 2025/04/01 16:07:42 by nlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ endif
 
 # Targets
 
-all: check-deps $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_LIB) $(RAYLIB_LIB)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT_LIB) $(LDFLAGS)
@@ -105,7 +105,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 # Install Dependencies Based on OS
-setup:
+setup: check-deps
 ifeq ($(UNAME_S),Linux)
 	@echo "🛠 Installing dependencies for Linux..."
 	sudo apt update && sudo apt install -y \

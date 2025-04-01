@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:58:30 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 06:41:02 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:12:18 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ void	render_npc_dialogue(t_game *game, t_npc *npc)
 		return;
 
 	(void)game;
-	int x = (WIN_W >> 1) - 300;
+	int x = (WIN_W >> 1) - 370;
 	int y = WIN_H - (WIN_H / 5);
-	int w = 600;
+	int w = 740;
 	int h = 80;
 
-	Color box_color = BLACK;
+	Color box_color = (Color){ 255, 253, 208, 230 };
 	Color border_color = GRAY;
-	Color text_color = WHITE;
+	Color text_color = BLACK;
 
 	const char *dialogue_text = get_current_dialogue_line(npc);
 	if (!dialogue_text)
 		return;
 
-	// Bordure
 	DrawRectangleRounded((Rectangle){x - 2, y - 2, w + 4, h + 4}, 0.2f, 16, border_color);
 	DrawRectangleRounded((Rectangle){x, y, w, h}, 0.2f, 16, box_color);
 	DrawTextEx(game->font.dialogue, dialogue_text, (Vector2){x + 20, y + 30}, 24, 1.0f, text_color);

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:05 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:57:55 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:02:53 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,33 @@ t_game	*init_game(char *filename)
 	game->story.loop_number = FIRST_LOOP;
 	game->font.dialogue = LoadFont(M_FONT);
 	game->font.interaction = LoadFont(I_FONT);
-	game->music.voice_message_one = LoadMusicStream(VOICE_MESSAGE1);
-	game->music.voice_message_two = LoadMusicStream(VOICE_MESSAGE2);
+	
+	game->music.voice_message_one.music = LoadMusicStream(VOICE_MESSAGE1);
+	game->music.voice_message_one.volume = 0.0f;
+	game->music.voice_message_one.is_playing = false;
+	
+	game->music.voice_message_two.music = LoadMusicStream(VOICE_MESSAGE2);
+	game->music.voice_message_two.volume = 0.0f;
+	game->music.voice_message_two.is_playing = false;
+	
+	game->music.denial.music = LoadMusicStream(MUSIC_DENIAL);
+	game->music.denial.volume = 0.0f;
+	game->music.denial.is_playing = false;
+	
+	game->music.acceptance.music = LoadMusicStream(MUSIC_ACCEPTANCE);
+	game->music.acceptance.volume = 0.0f;
+	game->music.acceptance.is_playing = false;
+	
+	game->music.bargaining.music = LoadMusicStream(MUSIC_BARGAINING);
+	game->music.bargaining.volume = 0.0f;
+	game->music.bargaining.is_playing = false;
+	
+	game->music.anger.music = LoadMusicStream(MUSIC_ANGRY);
+	game->music.anger.volume = 0.0f;
+	game->music.anger.is_playing = false;
+	
+	game->music.depression.music = LoadMusicStream(MUSIC_DEPRESSION);
+	game->music.depression.volume = 0.0f;
+	game->music.depression.is_playing = false;
 	return (game);
 }

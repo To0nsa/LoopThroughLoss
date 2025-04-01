@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 21:07:06 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:20:05 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ bool	interact_with_door(t_game *game)
 	{
 		if (story->state == DENIAL_LOOP)
 		{
-			show_temp_message(game, 3.0, "Maybe your mother is on the other side of that door ?");
+			show_temp_message(game, 3.0, "No, this isn't how it ends.");
 			story->has_interacted_with_door = true;
 			story->interaction_timer = 3.0;
 		}
 		else if (story->state == ANGER_LOOP)
 		{
-			show_temp_message(game, 3.0, "They will pay for this...");
+			show_temp_message(game, 3.0, "Stop coming here for answers, you won't find them.");
 			story->has_interacted_with_door = true;
 			story->interaction_timer = 3.0;
 		}
@@ -72,17 +72,14 @@ bool	interact_with_door(t_game *game)
 		}
 		else if (story->state == ACCEPTANCE_LOOP)
 		{
-			show_temp_message(game, 3.0, "She's dead but not gone.");
 			story->has_interacted_with_door = true;
-			show_temp_message(game, 3.0, "You carry her, and the mark she made on the world, with you.");
-			story->interaction_timer = 3.0;
 		}
 	}
 	if (door->state == CLOSED && door->type == FRAME_T
 		&& story->state == BARGAINING_LOOP)
 	{
-			show_temp_message(game, 3.0, "You try to repair the frame… maybe it’s not too late.");
-			story->has_interacted_with_frame = true;
+			show_temp_message(game, 3.0, "You try to repair the frame… maybe it's not too late.");
+			story->has_repaired_frame = true;
 			story->interaction_timer = 3.0;
 	}
 	return (true);

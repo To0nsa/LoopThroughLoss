@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:05:56 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 21:07:24 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 12:21:24 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ static inline t_texture	*select_wall_texture(t_game *game, t_ray *ray)
 					return &game->tex.frame_denial;
 				else if (story->state == ANGER_LOOP)
 					return &game->tex.frame_angry;
-				else if (story->state == BARGAINING_LOOP)
-					return &game->tex.frame_bargaining;
 				else if (story->state == DEPRESSION_LOOP)
 					return &game->tex.frame_sad;
 				else if (story->state == ACCEPTANCE_LOOP)
 					return &game->tex.frame_acceptance;
 				else if (story->state == BARGAINING_LOOP)
-					return &game->tex.frame_bargaining;
-				else if (story->state == BARGAINING_LOOP && story->has_interacted_with_frame)
-					return &game->tex.frame_bargaining_repaired;
+				{
+					if (story->has_repaired_frame)
+						return &game->tex.frame_bargaining_repaired;
+					else
+						return &game->tex.frame_bargaining;
+				}
 			}
 		}
 	}

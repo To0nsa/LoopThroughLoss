@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:06:19 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 23:04:22 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 14:13:26 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,29 @@ void	render_scene(t_game *game, double delta_time)
 	draw_temp_message(game);
 
 	render_transition(game, &game->transition);
+
+	if (game->story.state == ACCEPTANCE_LOOP
+		&& game->story.has_interacted_with_door)
+	{
+		Color gold = (Color){ 255, 215, 0, 255 };
+		Color white = (Color){ 255, 255, 255, 255 };
+
+		int	cover_height = (int)(WIN_H * game->story.cover_progress);
+
+		DrawRectangleGradientV
+			(0, WIN_H - cover_height, WIN_W, cover_height, gold, white);
+		if (game->story.cover_progress > 0.6f)
+		{
+			int x = (WIN_W >> 1) - 350;
+			int y = WIN_H - (WIN_H / 5);
+			DrawTextEx(game->font.dialogue,
+				"Acceptance is never an easy journey, her absence echoes in each moment.",
+				(Vector2){x, y - 30}, 24, 1.0f, BLACK);
+			DrawTextEx(game->font.dialogue,
+				"Though she's gone, you carry her, and the mark she made on this world, with you.",
+				(Vector2){x, y}, 24, 1.0f, BLACK);
+		}
+	}
 
 	free(z_buffer);
 }

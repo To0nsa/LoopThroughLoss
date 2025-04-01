@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:33:37 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 08:16:45 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 14:53:11 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	game_loop(t_game *game)
 	update_story(game, delta_time);
 	update_temp_message(game, delta_time);
 	update_voice_timer(game, delta_time);
+	update_music(game, delta_time);
 	
 	BeginDrawing();
 	ClearBackground(BLACK);
 	handle_events(game);
 	draw_background(game);
 	render_scene(game, delta_time);
-
 	EndDrawing();
 	
 	return (0);

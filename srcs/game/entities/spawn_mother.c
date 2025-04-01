@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:23:22 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 11:55:45 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 14:21:55 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,17 @@ static void	allocate_dialogues(t_game *game, t_dial *dialog, char *dialogues[][6
 void	init_mother_dialogues(t_game *game, t_npc *npc)
 {
 	static char	*mother_dialogues[][6] = {
-		{"Good morning, dear.",										// denial loop, first iteration PHASE_0
-			"I'm still at the hospital. You can call me.", 
-			"...", NULL },
-		{"I will come through that door, don't worry...",
-			"...any moment now.", NULL },								// denial loop, other iterations PHASE_1
-		{"...",
-			"You should have taken me to the doctor earlier.",
-			"Those damn doctors didn't know what they were doing!", NULL }, 		// anger loop PHASE_2
-		{"If you'd visited me more often, you would have noticed...",
-		"...a sign that something was wrong.", NULL }, 										// bargaining loop PHASE_3
-		{"What is your life going to look like...",
-			"...without me in it?", NULL},								// depression loop PHASE_4
+		{"Sweetheart, I'm still here... It's just a little scare.",							// denial loop, first iteration PHASE_0
+			"The doctors said I'll be fine. We have all the time in the world.", 
+			"We're not done making memories together, remember?", NULL },
+		{"I'll walk through that door any minute now. Keep your eyes on it...",
+			"I'm not going anywhere. I'm always right here with you.", NULL },				// denial loop, other iterations PHASE_1
+		{"You should've pushed harder for me. Why didn't you fight for better care?",
+			"They let me slip away, and you just stood there... How could you?", NULL }, 	// anger loop PHASE_2
+		{"If only we'd found that one specialist... I'd still be by your side.",
+			"There must have been another treatment out there, something we missed.", NULL }, 										// bargaining loop PHASE_3
+		{"I hate seeing how lost you are without me... but I can't reach you anymore.",
+			"What will you do when the silence becomes too loud to bear?", NULL},			// depression loop PHASE_4
 		{NULL}
 		};
 		
