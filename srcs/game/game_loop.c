@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:33:37 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 14:53:11 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 22:37:43 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	game_loop(t_game *game)
 
 	delta_time = GetFrameTime();
 	
+	update_music(game, delta_time);
 	handle_player_moves(game, delta_time);
 	update_transition(game, &game->transition, delta_time);
 	update_interaction_block_timer(game, delta_time);

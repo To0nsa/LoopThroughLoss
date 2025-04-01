@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 09:25:33 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 20:43:30 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 23:17:05 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	load_single_texture(t_game *game, t_texture *tex, const char *path)
 
 	tex->size.x = tex->texture.width;
 	tex->size.y = tex->texture.height;
-}
-
-void	load_sprite_animation(t_game *game, t_texture **frames,
-	char **paths, int frame_count)
-{
-	int	i;
-
-	*frames = x_calloc(game, frame_count, sizeof(t_texture));
-	for (i = 0; i < frame_count; i++)
-		load_single_texture(game, &((*frames)[i]), paths[i]);
 }
 
 void	load_game_textures(t_game *game)

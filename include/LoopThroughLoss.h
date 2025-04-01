@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 16:42:24 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 23:46:53 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define FOV_THRESHOLD		0.943956
 # define INFINITY_DIST		1e6
 
-# define WIN_NAME	"Cube3D"
+# define WIN_NAME	"LoopThroughLoss"
 # define WIN_W		1200
 # define WIN_H		900
 
@@ -426,12 +426,6 @@ void	update_music(t_game *game, double delta_time);
 // UTILS
 void	error(t_game *game, char *err_msg);
 void	free_game(t_game *game);
-void	free_tex_frames(t_game *game, t_texture *frames, int count);
-void	free_npc_waypoints(t_npc *npc);
-void	free_single_npc(t_game *game, t_npc *npc);
-void	free_npcs(t_game *game);
-void	free_single_item(t_game *game, t_item *item);
-void	free_items(t_game *game);
 void	load_single_texture(t_game *game, t_texture *tex, const char *path);
 void	load_game_textures(t_game *game);
 bool	is_facing_target(t_player *player, t_dpoint target_pos);

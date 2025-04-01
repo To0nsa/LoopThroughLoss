@@ -6,13 +6,13 @@
 #    By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 18:23:28 by nlouis            #+#    #+#              #
-#    Updated: 2025/04/01 16:07:42 by nlouis           ###   ########.fr        #
+#    Updated: 2025/04/01 23:50:57 by nlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and Flags
 CC       = cc
-CFLAGS   = -Wall -Wextra -Werror # -g -fsanitize=address -fsanitize=undefined
+CFLAGS   = -Wall -Wextra -Werror -g # -fsanitize=address -fsanitize=undefined
 NAME     = LoopThroughLoss
 
 # Directories
@@ -58,7 +58,7 @@ endif
 
 # Targets
 
-all: $(NAME)
+all: check-deps $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_LIB) $(RAYLIB_LIB)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT_LIB) $(LDFLAGS)
@@ -96,16 +96,16 @@ re: fclean all
 check-deps:
 ifeq ($(UNAME_S),Linux)
 	@echo "🔍 Checking for required development libraries (Linux)..."
-	@dpkg -s libgl1-mesa-dev > /dev/null 2>&1 || (echo "⛔ Missing dependencies. Running setup..."; $(MAKE) setup)
+	@dpkg -s libgl1-mesa-dev > /dev/null 2>&1 || (echo "⛔ Missing dependencies. Run 'make setup' to install."; exit 1)
 endif
 
 ifeq ($(UNAME_S),Darwin)
-	@echo "🔍 Checking for Raylib (macOS)..."
-	@pkg-config --exists raylib || (echo "⛔ Missing Raylib. Running setup..."; $(MAKE) setup)
+	@echo "🔍 Checking for Raylib and pkg-config (macOS)..."
+	@pkg-config --exists raylib || (echo "⛔ Missing Raylib/pkg-config. Run 'make setup' to install."; exit 1)
 endif
 
 # Install Dependencies Based on OS
-setup: check-deps
+setup:
 ifeq ($(UNAME_S),Linux)
 	@echo "🛠 Installing dependencies for Linux..."
 	sudo apt update && sudo apt install -y \
@@ -130,8 +130,8 @@ endif
 
 ifeq ($(UNAME_S),Darwin)
 	@echo "🛠 Installing dependencies for macOS..."
-	brew install raylib || true
-	brew install cmake pkg-config || true
+	brew update
+	brew install raylib pkg-config cmake
 endif
 
 .PHONY: all clean fclean re setup check-deps

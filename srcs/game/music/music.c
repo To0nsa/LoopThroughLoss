@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 20:18:42 by riamaev           #+#    #+#             */
-/*   Updated: 2025/04/01 15:01:01 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 22:30:57 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void update_music(t_game *game, double delta_time)
 				PlayMusicStream(track->music);
 				track->is_playing = true;
 			}
-			fade_music_volume(track, 0.7f, fade_speed, delta_time);
+			fade_music_volume(track, 0.4f, fade_speed, delta_time);
 		}
 		else
 		{

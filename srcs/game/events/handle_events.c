@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:17:07 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/30 23:03:09 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 23:49:54 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	handle_events(t_game *game)
 {
 	if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE))
+	{
+		free_game(game);
 		exit(EXIT_SUCCESS);
+	}
 
 	if (IsKeyPressed(KEY_E))
 		handle_interaction(game);

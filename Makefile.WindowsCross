@@ -1,0 +1,50 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.WindowsCross                              :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/04/01 23:00:54 by nlouis            #+#    #+#              #
+#    Updated: 2025/04/01 23:03:25 by nlouis           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME	= LoopThroughLoss.exe
+CC		= x86_64-w64-mingw32-gcc
+CFLAGS	= -Wall -Wextra -Werror -Iinclude -Ilibft/include -Iraylib/src
+LDFLAGS	= -Llibft/lib -lft -Lraylib/src -lraylib -lopengl32 -lgdi32 -lwinmm
+
+SRCS	= $(shell find srcs -name "*.c")
+OBJS	= $(SRCS:.c=.o)
+
+all: libft raylib $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+libft:
+	make -C libft CC=$(CC) AR=x86_64-w64-mingw32-ar
+
+raylib:
+	cd raylib/src && \
+	make CC=x86_64-w64-mingw32-gcc AR=x86_64-w64-mingw32-ar \
+	     PLATFORM=PLATFORM_DESKTOP \
+	     RAYLIB_LIBTYPE=STATIC \
+	     OS=Windows_NT
+
+clean:
+	rm -f $(OBJS)
+	make -C libft clean
+	make -C raylib/src clean
+
+fclean: clean
+	rm -f $(NAME)
+	make -C libft fclean
+
+re: fclean all
+
+.PHONY: all clean fclean re libft raylib
