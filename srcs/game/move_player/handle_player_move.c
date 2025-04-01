@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:28:44 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 08:45:36 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:28:35 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	handle_player_moves(t_game *game, double delta_time)
 	if (game->keys[KEY_D])
 		strafe_player_right(game, player, delta_time);
 	if (game->keys[KEY_RIGHT])
-		rotate_player_right(player, delta_time);
-	if (game->keys[KEY_LEFT])
 		rotate_player_left(player, delta_time);
+	if (game->keys[KEY_LEFT])
+		rotate_player_right(player, delta_time);
 }

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:06:19 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 14:13:26 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/01 16:26:57 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	render_scene(t_game *game, double delta_time)
 			DrawTextEx(game->font.dialogue,
 				"Though she's gone, you carry her, and the mark she made on this world, with you.",
 				(Vector2){x, y}, 24, 1.0f, BLACK);
+			DrawTextEx(game->font.dialogue,
+				"to my mother",
+				(Vector2){x + (WIN_W / 2), y + 60}, 24, 1.0f, BLACK);
 		}
 	}
 
