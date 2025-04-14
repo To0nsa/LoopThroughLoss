@@ -7,7 +7,7 @@ LoopThroughLoss is a project that has been build during a gamejam with a "TimeLo
 **To clone** this repository with submodules:
 
 ```bash
-git clone --recurse-submodules git@github.com:To0nsa/LoopThroughLoss.git
+git clone --recurse-submodules https://github.com/To0nsa/LoopThroughLoss.git
 ```
 
 **To install dependencies** (Linux/macOS):
