@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 10:35:20 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 12:41:01 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/14 13:32:21 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,8 @@ void	draw_temp_message(t_game *game)
 	Color border_color = Fade(GRAY, alpha);
 	Color text_color = Fade(BLACK, alpha);
 
-	// Bordure simulée
 	DrawRectangleRounded((Rectangle){x - 2, y - 2, w + 4, h + 4}, 0.2f, 16, border_color);
-
-	// Boîte principale
 	DrawRectangleRounded((Rectangle){x, y, w, h}, 0.2f, 16, box_color);
-
-	// Texte
 	DrawTextEx(game->font.interaction, game->temp_msg, (Vector2){x + 20, y + 30}, 24, 1.0f, text_color);
 }
 
