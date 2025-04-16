@@ -6,45 +6,80 @@
 #    By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 23:00:54 by nlouis            #+#    #+#              #
-#    Updated: 2025/04/01 23:03:25 by nlouis           ###   ########.fr        #
+#    Updated: 2025/04/16 17:19:42 by nlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= LoopThroughLoss.exe
-CC		= x86_64-w64-mingw32-gcc
-CFLAGS	= -Wall -Wextra -Werror -Iinclude -Ilibft/include -Iraylib/src
-LDFLAGS	= -Llibft/lib -lft -Lraylib/src -lraylib -lopengl32 -lgdi32 -lwinmm
+# **************************************************************************** #
+#                         WINDOWS CROSS MAKEFILE 🪟                            #
+# **************************************************************************** #
 
-SRCS	= $(shell find srcs -name "*.c")
-OBJS	= $(SRCS:.c=.o)
+# Compiler and flags
+CC       := x86_64-w64-mingw32-gcc
+AR       := x86_64-w64-mingw32-ar
+CFLAGS   := -Wall -Wextra -Werror -Iinclude -Ilibft/include -Iraylib/src
+LDFLAGS  := -Llibft/lib -lft -Lraylib/src -lraylib -lopengl32 -lgdi32 -lwinmm
+
+# Executable
+NAME     := LoopThroughLoss.exe
+
+# Sources and objects
+SRCS     := $(shell find srcs -name "*.c")
+OBJS     := $(SRCS:.c=.o)
+
+# Colors
+GREEN    := \033[0;32m
+CYAN     := \033[0;36m
+YELLOW   := \033[1;33m
+RESET    := \033[0m
+
+# Default goal
+.DEFAULT_GOAL := all
+
+# **************************************************************************** #
+#                                🔧 BUILD TARGETS                              #
+# **************************************************************************** #
 
 all: libft raylib $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+	@echo "$(CYAN)🎮 Built Windows executable:$(RESET) $(NAME)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(GREEN)🛠️  Compiled:$(RESET) $<"
 
 libft:
-	make -C libft CC=$(CC) AR=x86_64-w64-mingw32-ar
+	@make -C libft CC=$(CC) AR=$(AR)
 
 raylib:
-	cd raylib/src && \
-	make CC=x86_64-w64-mingw32-gcc AR=x86_64-w64-mingw32-ar \
-	     PLATFORM=PLATFORM_DESKTOP \
-	     RAYLIB_LIBTYPE=STATIC \
-	     OS=Windows_NT
+	@cd raylib/src && \
+	make CC=$(CC) AR=$(AR) \
+		PLATFORM=PLATFORM_DESKTOP \
+		RAYLIB_LIBTYPE=STATIC \
+		OS=Windows_NT
 
 clean:
-	rm -f $(OBJS)
-	make -C libft clean
-	make -C raylib/src clean
+	@rm -f $(OBJS)
+	@make -C libft clean
+	@make -C raylib/src clean
+	@echo "$(YELLOW)🧹 Cleaned object files.$(RESET)"
 
 fclean: clean
-	rm -f $(NAME)
-	make -C libft fclean
+	@rm -f $(NAME)
+	@make -C libft fclean
+	@echo "$(YELLOW)🗑️  Removed executable:$(RESET) $(NAME)"
 
 re: fclean all
+
+# **************************************************************************** #
+#                                💡 USAGE GUIDE                               #
+# **************************************************************************** #
+# make -f Makefile.WindowsCross        → Build the Windows executable 🪟
+# make -f Makefile.WindowsCross clean  → Clean all object files 🧹
+# make -f Makefile.WindowsCross fclean → Clean everything including binary 🗑️
+# make -f Makefile.WindowsCross re     → Full rebuild 🔁
+# **************************************************************************** #
 
 .PHONY: all clean fclean re libft raylib

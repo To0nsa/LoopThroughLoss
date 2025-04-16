@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:38:38 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/29 13:30:14 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/14 13:47:23 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	sort_entities(t_entity *entities, int count, t_player *player)
 		j = -1;
 		while (++j < count - i - 1)
 		{
-			if (ft_cab_dist_dpoint(entities[j].pos, player->pos)
-				< ft_cab_dist_dpoint(entities[j + 1].pos, player->pos))
+			if (ft_manhattan_dist_dpoint(entities[j].pos, player->pos)
+				< ft_manhattan_dist_dpoint(entities[j + 1].pos, player->pos))
 				ft_swap(&entities[j], &entities[j + 1], sizeof(t_entity));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:08:40 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 23:46:53 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/16 18:12:27 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,9 +449,6 @@ void	init_player(t_game *game, t_player *player);
 void	update_temp_message(t_game *game, double delta_time);
 void	show_temp_message(t_game *game, double duration, const char *message);
 void	draw_temp_message(t_game *game);
-
-// NPC
-// void	free_npc_textures(t_game *game, t_sprite *sprite);
 
 
 // ITEM

@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:09:21 by nlouis            #+#    #+#             */
-/*   Updated: 2025/03/31 16:02:30 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/04/16 20:46:19 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	continue_npc_dialogue(t_game *game)
 	t_npc	*npc;
 
 	npc = find_closest_npc(game, 1.1);
-	if (!npc || npc->state != SPEAK || npc->state == NOT_PRESENT)
+	if (!npc || npc->state != SPEAK)
 		return (false);
 	advance_npc_dialogue(npc, &game->story);
 	return (true);
@@ -69,6 +69,8 @@ static bool	handle_npc_dialogue(t_game *game)
 	t_npc	*npc;
 
 	npc = find_closest_npc(game, 1.1);
+	if (npc->state == NOT_PRESENT)
+		return (false);
 	if (!npc || npc->state == SPEAK)
 		return (false);
 	npc->state = SPEAK;
