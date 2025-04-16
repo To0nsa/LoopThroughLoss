@@ -11,7 +11,7 @@ This short psychological experience takes you through looping inner thoughts, re
 
 ## 🎬 Gameplay
 
-[![LoopThroughLoss](https://img.youtube.com/vi/3mGU6aDea5c/0.jpg)](https://www.youtube.com/watch?v=3mGU6aDea5c)&#8203;
+[![LoopThroughLoss](https://img.youtube.com/vi/GJaF5zaGVMs/0.jpg)](https://www.youtube.com/watch?v=GJaF5zaGVMs)
 
 Click the image above to watch a the full playthrough of the game on Youtube!
 
