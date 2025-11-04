@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:09:21 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/16 20:46:19 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/11/04 22:25:39 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static t_npc	*find_closest_npc(t_game *game, double max_distance)
 	i = 0;
 	while (i < game->npc_count)
 	{
+		if (game->npcs[i]->state == NOT_PRESENT)
+		{
+			i++;
+			continue ;
+		}
 		current_dist
 			= ft_euclidean_dist_dpoint(game->player.pos, game->npcs[i]->pos);
 		if (current_dist < closest_dist
@@ -39,7 +44,7 @@ static t_npc	*find_closest_npc(t_game *game, double max_distance)
 
 static bool	advance_npc_dialogue(t_npc *npc, t_story *story)
 {
-	if (npc->state != SPEAK)
+	if (!npc || npc->state != SPEAK)
 		return (false);
 	npc->dialogue.current_line++;
 	if (npc->dialogue.current_line
@@ -57,7 +62,7 @@ bool	continue_npc_dialogue(t_game *game)
 {
 	t_npc	*npc;
 
-	npc = find_closest_npc(game, 1.1);
+	npc = find_closest_npc(game, 1.2);
 	if (!npc || npc->state != SPEAK)
 		return (false);
 	advance_npc_dialogue(npc, &game->story);
@@ -68,10 +73,10 @@ static bool	handle_npc_dialogue(t_game *game)
 {
 	t_npc	*npc;
 
-	npc = find_closest_npc(game, 1.1);
-	if (npc->state == NOT_PRESENT)
+	npc = find_closest_npc(game, 1.2);
+	if (!npc || npc->state == NOT_PRESENT)
 		return (false);
-	if (!npc || npc->state == SPEAK)
+	if (npc->state == SPEAK)
 		return (false);
 	npc->state = SPEAK;
 	return (true);
