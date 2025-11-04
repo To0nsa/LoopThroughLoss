@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 01:11:26 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/01 15:20:05 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/11/04 22:22:15 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ bool	interact_with_door(t_game *game)
 	door = find_closest_door(game, 1.3);
 	if (!door)
 		return (false);
+
+	t_dpoint center = (t_dpoint){ door->pos.x + 0.5, door->pos.y + 0.5 };
+	if (!is_facing_target(&game->player, center))
+		return (false);
+	
 	if (door->state == CLOSED && door->type == DOOR_T)
 	{
 		if (story->state == DENIAL_LOOP)
