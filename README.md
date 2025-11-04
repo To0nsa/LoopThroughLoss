@@ -9,7 +9,7 @@ This short psychological experience takes you through looping inner thoughts, re
 
 ---
 
-## 🎬 Gameplay
+## 🎬 Gameplay video
 
 [![LoopThroughLoss](https://img.youtube.com/vi/GJaF5zaGVMs/0.jpg)](https://www.youtube.com/watch?v=GJaF5zaGVMs)
 
