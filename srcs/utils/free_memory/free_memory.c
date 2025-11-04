@@ -6,7 +6,7 @@
 /*   By: nlouis <nlouis@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 00:03:48 by nlouis            #+#    #+#             */
-/*   Updated: 2025/04/02 00:14:59 by nlouis           ###   ########.fr       */
+/*   Updated: 2025/11/04 21:57:36 by nlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static void free_single_item(t_item *item)
 		UnloadTexture(item->texture_message.texture);
 	if (item->is_broken && item->texture_broken.texture.id > 0)
 		UnloadTexture(item->texture_broken.texture);
-	free(item->type);
-	free(item->name);
 	free(item);
 }
 
