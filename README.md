@@ -72,7 +72,7 @@ make re           # Full rebuild from scratch
 
 ---
 
-## 🌐 Web Build (itch.io)
+## 🌐 Web Build
 
 Build the game for the browser using Emscripten + CMake. The repository ships with a `CMakeLists.txt` that supports both native and Web builds.
 
@@ -107,15 +107,13 @@ This produces `build-web/index.html` (plus `.js`, `.wasm`, and `.data` files). A
 emrun build-web/index.html
 ```
 
-5) Publish on itch.io:
+Or use Python's HTTP server:
 
-- Zip the generated files from `build-web/` (ensure `index.html` is at the root of the zip).
-- Upload the zip as a new build and check “This file will be played in the browser”.
-- Recommended: set the viewport to the HTML game’s default (or enable fullscreen).
+```bash
+python3 -m http.server -d build-web 8000
+```
 
-Notes:
-- The Web build uses `ALLOW_MEMORY_GROWTH` and preloads `assets/` and `maps/` for file I/O.
-- Audio on the Web may start only after the first user interaction (browser policy).
+Then open `http://localhost:8000` in your browser.
 
 ---
 
