@@ -72,6 +72,53 @@ make re           # Full rebuild from scratch
 
 ---
 
+## 🌐 Web Build (itch.io)
+
+Build the game for the browser using Emscripten + CMake. The repository ships with a `CMakeLists.txt` that supports both native and Web builds.
+
+1) Install Emscripten (emsdk):
+
+```bash
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+./emsdk install latest
+./emsdk activate latest
+source ./emsdk_env.sh
+```
+
+2) Configure the Web build with CMake via `emcmake`:
+
+```bash
+cd /path/to/LoopThroughLoss
+emcmake cmake -S . -B build-web -DCMAKE_BUILD_TYPE=Release
+```
+
+3) Build:
+
+```bash
+cmake --build build-web -j
+```
+
+This produces `build-web/index.html` (plus `.js`, `.wasm`, and `.data` files). Assets in `assets/` and maps in `maps/` are preloaded automatically.
+
+4) Test locally (optional):
+
+```bash
+emrun build-web/index.html
+```
+
+5) Publish on itch.io:
+
+- Zip the generated files from `build-web/` (ensure `index.html` is at the root of the zip).
+- Upload the zip as a new build and check “This file will be played in the browser”.
+- Recommended: set the viewport to the HTML game’s default (or enable fullscreen).
+
+Notes:
+- The Web build uses `ALLOW_MEMORY_GROWTH` and preloads `assets/` and `maps/` for file I/O.
+- Audio on the Web may start only after the first user interaction (browser policy).
+
+---
+
 ## 📜 License
 
 This project is licensed under the MIT License.

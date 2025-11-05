@@ -2,6 +2,7 @@
 LoopThroughLoss
 
 # Build artifacts
+build-web/
 objs/
 *.o
 *.d
@@ -16,3 +17,9 @@ libft/lib/libft.a
 .vscode/
 .idea/
 .DS_Store
+
+#butler
+build-web.zip
+butler.zip
+7z.so
+libc7zip.so

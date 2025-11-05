@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{{ TITLE }}}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden; /* no scrollbars inside itch iframe */
+      touch-action: none; /* better pointer input */
+    }
+    #canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      /* crisp pixels if your game is low-res */
+      image-rendering: optimizeSpeed;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      -ms-interpolation-mode: nearest-neighbor;
+    }
+    /* Optional minimal overlay for “click to start” (audio unlock) */
+    #overlay {
+      position: absolute; inset: 0;
+      display: none; align-items: center; justify-content: center;
+      color: #fff; font: 16px/1.4 system-ui, sans-serif;
+      background: rgba(0,0,0,.4); text-align: center;
+      user-select: none;
+    }
+    #overlay.show { display: flex; cursor: pointer; }
+    #status { position: absolute; left: 8px; bottom: 8px; color:#ccc; font:12px system-ui,sans-serif; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
+  <div id="overlay" class="show">Click to start</div>
+  <div id="status"></div>
+
+  <script>
+    // Emscripten will read Module.* during boot
+    const canvas = document.getElementById('canvas');
+    const overlay = document.getElementById('overlay');
+    const statusEl = document.getElementById('status');
+
+    // Resize backbuffer to match CSS size (prevents blur)
+    function resizeCanvasToDisplaySize() {
+      const w = Math.floor(canvas.clientWidth);
+      const h = Math.floor(canvas.clientHeight);
+      // Only resize when it actually changed to avoid flicker/context clears
+      if (canvas.width === w && canvas.height === h) return;
+      if (Module && Module.setCanvasSize) {
+        Module.setCanvasSize(w, h, true); // third arg = overrideLowMemory
+      } else {
+        canvas.width = w; canvas.height = h;
+      }
+    }
+
+    // Keep canvas in sync with its own element size, not the whole body
+    const ro = new ResizeObserver(() => {
+      // Coalesce resize notifications into a rAF for stability
+      if (!resizeCanvasToDisplaySize._pending) {
+        resizeCanvasToDisplaySize._pending = true;
+        requestAnimationFrame(() => {
+          resizeCanvasToDisplaySize._pending = false;
+          resizeCanvasToDisplaySize();
+        });
+      }
+    });
+    ro.observe(canvas);
+
+    // Simple “click to start” to unlock audio on the first gesture
+    function unlockAndStart() {
+      overlay.classList.remove('show');
+      // Try to resume any suspended audio contexts if present
+      if (typeof AudioContext !== 'undefined') {
+        try {
+          const ac = new AudioContext();
+          if (ac.state === 'suspended') ac.resume();
+          // close temp context; your engine will create its own
+          ac.close();
+        } catch (_) {}
+      }
+      // Ensure initial size once unlocked
+      resizeCanvasToDisplaySize();
+      window.removeEventListener('pointerdown', unlockAndStart);
+    }
+    window.addEventListener('pointerdown', unlockAndStart);
+
+    // Expose Module for Emscripten glue
+    var Module = {
+      canvas,
+      setStatus: (t) => { statusEl.textContent = t || ''; },
+      // Optional: initial size at boot
+      preRun: [() => resizeCanvasToDisplaySize()],
+      postRun: [],
+      // Hint WebGL context attributes to Emscripten/GLFW
+      webglContextAttributes: {
+        majorVersion: 1,
+        minorVersion: 0,
+        alpha: false,
+        antialias: false,
+        depth: true,
+        stencil: false,
+        preserveDrawingBuffer: true, // avoids black flash on some drivers
+        desynchronized: true,        // hint to reduce jank on resize
+        powerPreference: 'high-performance'
+      }
+    };
+  </script>
+
+  {{{ SCRIPT }}} <!-- emscripten injects index.js here -->
+</body>
+</html>
